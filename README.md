@@ -1,3 +1,5 @@
+<img src = "https://github.com/melonproject/branding/blob/master/facebook/Facebook%20cover%20blue%20on%20white.png" width = "100%">
+
 # Greenpaper
 
 Read the [Melon Protocol Greenpaper](https://github.com/melonproject/greenpaper/blob/master/melonprotocol.pdf).

@@ -138,7 +138,8 @@ The Melon protocol includes the following modules as a foundation:
 	\item[Performance Fee] A gross asset value (see appendix \ref{app:defgav}) dependent payment for the Portfolio Manager.
 \end{description}
 
-In the \textit{registrar module}, the Portfolio Manager selects a finite amount of assets as well as a finite amount of exchanges on which these assets can be traded. All a Portfolio Manager can ever do is trade those specific assets on those specific exchanges. The smart contracts do not allow funds to be sent in any other way or to any other accounts.  
+In the \textit{registrar module}, the Portfolio Manager selects a finite amount of assets, a finite amount of corresponding price feeds, as well as a finite amount of exchanges on which these assets can be traded. All a Portfolio Manager can ever do is trade those specific assets on those specific exchanges. The smart contracts do not allow funds to be sent in any other way or to any other accounts. 
+%By construction the first entry is the Entry is the ERC20 compliant EtherToken contract
 
 The \textit{functionality module} allows a Portfolio Manager to retain \textit{actions} or \textit{rights} and avoid penalization from non-action (eg. Augur’s REP tokens). These interactions between token custodian and corresponding smart-contracts need to be programmed in as it is no longer an individual's or non-contract account which controls these funds.
 

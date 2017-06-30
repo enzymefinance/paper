@@ -399,24 +399,25 @@ Let $\underline{p}^{t_i}$ be the vector set of asset prices, at time $t_i$. Then
 \begin{equation}
 	\underline{p}^{t_i} = \begin{pmatrix}p_{a_{1}}^{t_i}\\ \vdots \\ p_{a_{n}}^{t_i}\end{pmatrix} \in \mathbb{R}_{\geq 0}^n
 \end{equation}
-where $p_{a_{k}}^{t_i}$ is the price per token unit of asset $a_k$ in reference asset, at time $t_i$, for $k \in \mathbb{N}$.
+where $p_{a_{k}}^{t_i}$ is the price per token unit of asset $a_k$ denominated in reference asset, at time $t_i$, for $k \in \mathbb{N}$.
 
 Note, since by convention $a_1$ represents the reference asset, and the prices are given in the reference asset the first price $p_{a_{1}}^{t_i}$ is always equal to one.
 
-The Gross Asset Value or \textit{GAV} $\hat{v}_{h_m}^{t_i}$ in the reference asset of portfolio $\underline{h}_m^{t_i}$ at time $t_i$ is:
+The Gross Asset Value or \textit{GAV} $gav_{h_m}^{t_i}$ denominated in the reference asset of portfolio $\underline{h}_m^{t_i}$ at time $t_i$ is:
 \begin{equation}
-	\hat{v}_{h_m}^{t_i} = \langle \underline{p}^{t_i}, \underline{h}_m^{t_i}\rangle = \sum_{k=1}^{n} p_{a_{k}}^{t_i}h_{a_{k}}^{t_i}
+	gav_{h_m}^{t_i} = \langle \underline{p}^{t_i}, \underline{h}_m^{t_i}\rangle = \sum_{k=1}^{n} p_{a_{k}}^{t_i}h_{a_{k}}^{t_i}
 \end{equation}
-with the standard scalar product on $\mathbb{R}^n$. The GAV can be seen as the gross \textit{value} of the portfolio.
+with the standard scalar product on $\mathbb{R}^n$.
 
 \section{Net Asset Value}\label{app:defnav}
 
-The Net Asset Value or \textit{NAV} $v_{h_m}^{t_i}$ in the reference asset of portfolio $\underline{h}_m^{t_i}$ at time $t_i$ is:
+The Net Asset Value or \textit{NAV} $v_{h_m}^{t_i}$ denominated in the reference asset of portfolio $\underline{h}_m^{t_i}$ at time $t_i$ is:
+
 \begin{equation}
-v_{h_m}^{t_i} = \hat{v}_{h_m}^{t_i} - \textit{Management Fees}^{t_i} - \textit{Performance Fees}^{t_i}
+nav_{h_m}^{t_i} = gav_{h_m}^{t_i} - r_{h_m}^{t_i}
 \end{equation}
 
-$\textit{Management Fees}^{t_i}$ resp. $\textit{Performance Fees}^{t_i}$ is the management resp. performance fees given to the Portfolio Manager for timestep $t_i$.
+where $r_{h_m}^{t_i}$ is the rewards earned by the portfolio $m$ denominated in the reference asset of portfolio $\underline{h}_m^{t_i}$ at time $t_i$. That is in particular the $\textit{Management Fees}_{h_m}^{t_i}$ resp. $\textit{Performance Fees}_{h_m}^{t_i}$.
 
 \section{Delta}\label{app:defdelta}
 
@@ -429,7 +430,7 @@ Let be:
 	I^{t_i} &=& \textit{Sum of all investments within $(t_{i-1}, t_i]$} \\
 	W^{t_i} &=& \textit{Sum of all withdrawals within $(t_{i-1}, t_i]$}
 \end{eqnarray*}
-Where both $I^{t_i}$ and $W^{t_i}$ is a value in the reference asset. Then the Delta of a single time step is:
+Where both $I^{t_i}$ and $W^{t_i}$ is a value in denominated the reference asset. Then the Delta of a single time step is:
 \begin{equation}
 	\Delta_{(t_i, t_{i+1}]} = 
 		\frac{v_{h_m}^{t_{i+1}} - 
@@ -453,7 +454,7 @@ By induction, we can see that the Delta $\Delta_{(t_i, t_j]}$ remains independen
 
 Expressed mathematically the \textit{NAV} per share $p_{m}^{t_i}$  of portfolio $m$, at time $t_i$ is:
 \begin{equation}
-	p_{m}^{t_i} = \Delta_{(t_0, t_i]}
+	p_{m}^{t_i} = \Delta_{(t_0, t_i]} = \frac{nav_{h_m}^{t_i}}{\text{Total shares in existence}}
 \end{equation}
 
 where $t_0$ is the time of contract creation. The price $p_{m}^{t_i}$ is denominated in the reference asset. 

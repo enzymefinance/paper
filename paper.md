@@ -31,7 +31,7 @@ The concept of smart contracts executed on a singleton machine, initially introd
 
 We will use this approach to build our very own chain called Melon chain. Melon chain will have characteristics custom tailored for the needs of investment fund managers. It will be in the form of an _open_ parachain which means that it does not have its own set of _Miners, Stakers or Authorities_. Rather it will use the _pooled security_ concept of Polkadot. Its security is thus directly corrolated to the entire Polkadot network. Saving an additional validation round e.g. due to another step of Miner, Stakers or Authrities validation, Melon chain will be able to relay messages accross chains faster than _closed_ Blockchains. Where closed means Blockchains with their own validation process. Since Melon chain is not burdened with having to incentivize its own set of Miners, Stakers or Authorities there is no such cost put on the network. See also https://eprint.iacr.org/2016/555.pdf. Meaning the Melon chain will be much cheaper to use than traditional blockchains.
 
-### Assets
+#### Assets
 
 An example for such computer code is known as the ERC20 standard. Essentially a small (<100 lines of code) piece of software implementing a bitcoin-like cryptocurrency.
 

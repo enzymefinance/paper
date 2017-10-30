@@ -168,7 +168,6 @@ buyQuantity | `uint256` |  Quantity of sellAsset to be bought
 timestamp | `uint256` | Time in seconds when this order was created
 fillQuantity | `uint256` | Buy quantity filled; Always less than buy_quantity
 
-
 #### Infrastructure
 
 These are security critical infrastructure modules. These Melon modules are:

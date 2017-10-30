@@ -48,7 +48,9 @@ Eventually hosting of the Melon application will be payed by services such as cl
 
 ### Privacy Preserving Communication (Melon Mail)
 
-Communication between the Investor and Manager can be achieved in a privacy preserving settings using Melon Mail.
+Melon Mail is a mail service that stores your private data on the distributed web (ipfs). Which means that no one owns your data other that you. Encrypted with the same cryptographic principles that make your crypto-currencies secure
+
+Therefore communication between the Investor and Manager can be achieved in a privacy preserving way using Melon Mail.
 
 ## Investment Funds Design
 

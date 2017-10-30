@@ -6,9 +6,9 @@ Automating fund administration and ensuring economic value stays in custody of t
 
 Using distributed networks such as blockchains as a way of holding and transferring economic value provides one part of the solution. Another part is that economic value on distributed quasi turing complete machines can be held solely by smart-contract code and only be spent in a way which is pre-programmed within this code.
  
-We propose a set of rules, called Melon protocol, for how such an investment fund could be created and operated in completely self-regulating, that is a technology regulated way. The rules are meant to protect both Investors and Managers from significant malevolent behavior regardless of whether the identity of the parties are known to each other.
+We propose a set of rules, called Melon protocol, for how such an investment fund could be created and operated in a completely self-regulating, that is a technology regulated way. The rules are meant to protect both Investors and Managers from significant malevolent behavior regardless of whether the identity of the parties are known to each other.
 
-The protocol implemented for example in Solidity or WASM acts as a template, called Melon fund, for how investment funds can be created. This template together with an frontend on how to access and operate the investment fund are designed in an reliable, permissionless and ownerless way.
+The protocol implemented for example in Solidity or WASM acts as a template, called Melon fund, for how investment funds can be created. This template together with a frontend on how to access and operate the investment fund are designed in an reliable, permissionless and ownerless way.
 
 Additionally we propose Melon chain, a customized distributed turing complete machine just for the purpose of having above investment funds operated in the most efficient, inter-connected and secure way possible.
 
@@ -25,12 +25,15 @@ Additionally we propose Melon chain, a customized distributed turing complete ma
 
 ### Decentralized Execution (Melon chain)
 
-Quasi turing complete machines such as Ethereum allow for computer code to be executed on a distributed basis within the constraints of a preagreed protocol.
-Initially introduced by Ethereum this concept how evolved into Polkadot. A multichain framework allowing for exchange of information accross many different chains with different characteristics.
+Quasi turing complete machines such as Ethereum allow for computer code to be executed on a distributed basis within the constraints of a preagreed protocol. For the duration of this paper we will refer to _distributed quasi turing complete machines_ as blockchains or _chains_ and to _computer code_ executed on those chains as _smart contracts_.
 
-#### Assets
+The concept of smart contracts executed on a singleton machine, initially introduced by Ethereum, has since evolved into Polkadot. A multichain framework allowing for exchange of information accross many different chains with different characteristics.
 
-An example for such computer code is known as the ERC20 standart. Essentially a small (<100 lines of code) piece of software implementing a bitcoin-like cryptocurrency.
+We will use this approach to build our very own chain called Melon chain. Melon chain will have characteristics custom tailored for the needs of investment fund managers. It will be in the form of an _open_ parachain which means that it does not have its own set of _Miners, Stakers or Authorities_. Rather it will use the _pooled security_ concept of Polkadot. Its security is thus directly corrolated to the entire Polkadot network. Saving an additional validation round e.g. due to another step of Miner, Stakers or Authrities validation, Melon chain will be able to relay messages accross chains faster than _closed_ Blockchains. Where closed means Blockchains with their own validation process. Since Melon chain is not burdened with having to incentivize its own set of Miners, Stakers or Authorities there is no such cost put on the network. See also https://eprint.iacr.org/2016/555.pdf. Meaning the Melon chain will be much cheaper to use than traditional blockchains.
+
+### Assets
+
+An example for such computer code is known as the ERC20 standard. Essentially a small (<100 lines of code) piece of software implementing a bitcoin-like cryptocurrency.
 
 #### Exchanges
 
@@ -38,7 +41,11 @@ Another example are exchanges. Given above concept one now can implement compute
 
 #### Investment Funds
 
-Using the concept that smart contracts can be custodian of assets, we can now build smart contracts that act as fully functional investment funds. 
+Using the concept that smart contracts can be custodian of assets. Once a smart contract holds assets there needs the be custom functions built into the smart-contract in order to spend those assets again. Lack of such function means that assets are forever lost.
+
+ we can now build smart contracts that act as fully functional investment funds.
+
+To manage their holdings these investment funds use decentralised exchanges to buy and sell assets. 
 
 ### Decentralized Hosting (IPFS)
 

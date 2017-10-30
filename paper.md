@@ -16,8 +16,8 @@ Additionally we propose Melon chain, a customized distributed turing complete ma
 
 * [Introduction](#Introduction)
 * [Background](#Background)
-* [Investment Funds Design](# Investment Funds Design)
-* [Melon Chain Design](# Melon Chain Design)
+* [Investment Funds Design](#Investment Funds Design)
+* [Melon Chain Design](#Melon Chain Design)
 
 ## Introduction
 
@@ -69,13 +69,13 @@ Shutting down a version disables the ability to setup new funds using this versi
 Melon fund as a smart contract that acts as the accountant and custodian.
 Broadly speaking a Melon fund should be capable of 
 
-- accepting subscription and redemption requests, 
+- accepting/executing subscription and redemption requests, 
 - make orders on an exchange
 - take orders on an exchange
 - receiving management and performance rewards
 
-A Melon fund is created by triggering the Solidity function version.setupFund(..) on the latest protocol version contract.
-Where the input parameters are:
+A Melon fund is created by triggering the Solidity function version.setupFund(P) on the latest protocol version contract.
+Where the input parameters _P_ are:
 
 Name | Unit | Description
 --- | --- | ---

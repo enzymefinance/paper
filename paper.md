@@ -14,10 +14,10 @@ Additionally we propose Melon chain, a customized distributed turing complete ma
 
 ## Table of Contents
 
-* [Introduction](#Introduction)
-* [Background](#Background)
-* [Investment Funds Design](#Investment-Funds-Design)
-* [Melon Chain Design](#Melon-Chain-Design)
+* [Introduction](#introduction)
+* [Background](#background)
+* [Investment Funds Design](#investment-funds-design)
+* [Melon Chain Design](#melon-chain-design)
 
 ## Introduction
 

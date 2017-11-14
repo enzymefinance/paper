@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.10.24)  14 NOV 2017 11:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.10.24)  14 NOV 2017 11:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -131,11 +131,11 @@ LaTeX Font Info:    ... okay on input line 351.
 
 -- Lines per column: 56 (exact).
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 599.
+(Font)              <8> on input line 603.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 599.
+(Font)              <6> on input line 603.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 599.
+(Font)              <5> on input line 603.
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -156,7 +156,7 @@ Before submitting the final camera ready copy, remember to:
 Here is how much of TeX's memory you used:
  1061 strings out of 493069
  19364 string characters out of 6138221
- 77807 words of memory out of 5000000
+ 78807 words of memory out of 5000000
  4655 multiletter control sequences out of 15000+600000
  37650 words of font info for 71 fonts, out of 8000000 for 9000
  1140 hyphenation exceptions out of 8191
@@ -166,7 +166,7 @@ Here is how much of TeX's memory you used:
 texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/ti
 mes/utmri8a.pfb>
-Output written on specs.pdf (1 page, 46701 bytes).
+Output written on specs.pdf (1 page, 46735 bytes).
 PDF statistics:
  25 PDF objects out of 1000 (max. 8388607)
  17 compressed objects within 1 object stream

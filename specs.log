@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.11.14)  14 NOV 2017 16:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.11.14)  14 NOV 2017 16:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -173,33 +173,27 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 480.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 480.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 502.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 502.
 
-Overfull \hbox (2.50366pt too wide) in paragraph at lines 505--505
-[]\OT1/ptm/m/n/10 referenceAsset| 
+Overfull \hbox (3.32083pt too wide) in paragraph at lines 507--507
+[]\OT1/ptm/m/n/8 managementRewardRate| 
  []
 
 
-Overfull \hbox (43.27338pt too wide) in paragraph at lines 506--506
-[]\OT1/ptm/m/n/10 managementRewardRate| 
+Overfull \hbox (2.8649pt too wide) in paragraph at lines 508--508
+[]\OT1/ptm/m/n/8 performanceRewardRate| 
  []
 
 
-Overfull \hbox (42.70346pt too wide) in paragraph at lines 507--507
-[]\OT1/ptm/m/n/10 performanceRewardRate| 
- []
-
-
-Overfull \hbox (11.62202pt too wide) in paragraph at lines 501--512
+Overfull \hbox (8.77658pt too wide) in paragraph at lines 502--513
  [] 
  []
 
 
-Overfull \hbox (14.35368pt too wide) in paragraph at lines 524--524
-[]\OT1/ptm/m/n/10 incentiveQuantity| 
- []
-
-
-Overfull \hbox (11.62202pt too wide) in paragraph at lines 519--526
+Overfull \hbox (8.77658pt too wide) in paragraph at lines 521--528
  [] 
  []
 
@@ -207,24 +201,6 @@ Overfull \hbox (11.62202pt too wide) in paragraph at lines 519--526
 
 
 ]
-Overfull \hbox (6.5638pt too wide) in paragraph at lines 541--541
-[]\OT1/ptm/m/n/10 receiveQuantity| 
- []
-
-
-Overfull \hbox (14.35368pt too wide) in paragraph at lines 542--542
-[]\OT1/ptm/m/n/10 incentiveQuantity| 
- []
-
-
-Overfull \hbox (11.62202pt too wide) in paragraph at lines 537--544
- [] 
- []
-
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 708.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 708.
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -240,7 +216,7 @@ Before submitting the final camera ready copy, remember to:
 Here is how much of TeX's memory you used:
  1686 strings out of 494437
  28447 string characters out of 6166644
- 89482 words of memory out of 5000000
+ 90482 words of memory out of 5000000
  5073 multiletter control sequences out of 15000+600000
  38757 words of font info for 72 fonts, out of 8000000 for 9000
  322 hyphenation exceptions out of 8191
@@ -254,7 +230,7 @@ mes/utmb8a.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/urw/times/u
 tmbi8a.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/urw/times/utmr8
 a.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/urw/times/utmri8a.pf
 b>
-Output written on specs.pdf (2 pages, 83933 bytes).
+Output written on specs.pdf (2 pages, 84138 bytes).
 PDF statistics:
  40 PDF objects out of 1000 (max. 8388607)
  28 compressed objects within 1 object stream

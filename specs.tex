@@ -452,7 +452,7 @@ To manage their holdings these investment funds use decentralised exchanges to b
 
 The main functionality of the Governance contract is to add new protocol versions such as this Version contract and to shut down existing versions once they become obsolete.
 
-Adding new protocol version is done by anyone proposing a version to be added and is executed once authority consensus has been established.
+Adding a \textit{new protocol version} is done by anyone proposing a version to be added and is executed once authority consensus has been established.
 
 Shutting down an existing protocol version is done by anyone proposing a version to be shut down and is executed once authority consensus has been established.
 
@@ -463,9 +463,17 @@ Shutting down a version disables the ability to setup new funds using this versi
 Melon fund as a smart contract that acts as the custodian and accountant. Broadly speaking a Melon fund should be capable of accepting/executing subscription and redemption requests, make orders on an exchange, take orders on an exchange and
 receiving management and performance rewards.
 
-A Melon fund is created by triggering the Solidity function version.setupFund(P) on the latest protocol version contract. Where the input parameters P are:
+A Melon fund is created by triggering a Solidity function in the version contract.
 
 \subsection{Modules}
+
+Melon has six different module classes: Exchange Adapters, Rewards, Participation, Risk Management, Asset registrar and  Data feed.
+
+Which can be categorized into three sub sets: Libraries, Boolean functions and Infrastructure.
+
+\section{Specifications}
+
+\subsection{Asset Registrar}
 
 \subsection{Data Feed}
 
@@ -489,13 +497,35 @@ getReferencePrice can be used to query the price of any given asset in reference
 	\end{algorithmic}
 \end{algorithm}
 
+\subsection{Accounting}
+
+\subsection{Rewards}
+
 \subsection{Participation}
+
+\subsection{Exchange Adapter}
 
 \subsection{Risk Management}
 
-\subsection{Interaction}
+\subsection{Version}
 
-\subsubsection{Setup of a new Melon fund}
+\subsection{Governance}
+
+\section{Interactions}
+
+This section describes how the three main agents of the Melon protocol interact with each other.
+
+The three main agents being: Investor, Manager, Module Operator.
+
+\subsection{Operater operates Asset registrar}
+
+\subsection{Operater operates Data feed}
+
+\subsection{Operater operates Participation module}
+
+\subsection{Operater operates Risk management module}
+
+\subsection{Manager sets up a new Melon fund}
 
 A new Melon fund can be setup by specifying the following parameters via setupFund function of the version contract:
 
@@ -514,7 +544,7 @@ A new Melon fund can be setup by specifying the following parameters via setupFu
 		\end{tabular}
 \end{center}
 
-\subsubsection{Participant invests in a Melon fund}
+\subsection{Investor invests in a Melon fund}
 
 A participant starts to invest in a fund F by first creating a subscription request R. Parameters to be specified are:
 
@@ -533,7 +563,7 @@ R parameters are checked against restriction rules specified in the participatio
 
 R is then executed in by any entity via F.executeRequest after certain conditions are satisfied. These conditions include if currentTimestamp - R.timestamp >= DF.INTERVAL (DF refers to datafeed module and INTERVAL corresponds to update frequency value) and if DF.getLastUpdateId >= R.lastDataFeedUpdateId + 2. This is to minimize unfair advantage from information asymmetries associated with the investor.
 
-\subsubsection{Participant redeems from a Melon fund}
+\subsection{Investor redeems from a Melon fund}
 
 A participant can redeem from a fund by first creating a redemption request. Parameters to be specified are:
 
@@ -552,7 +582,11 @@ Request parameters are checked against restriction rules specified in the partic
 
 R is then executed in a similar way as mentioned earlier.
 
-\subsubsection{Manager makes an order}
+\subsection{Manager toggles subscription}
+
+\subsection{Manager toggles redemption}
+
+\subsection{Manager makes an order}
 
 Manager can make an order by specifying asset pair, sell and buy quantities as parameters. Asset pair is checked against datafeed module DF through the function DF.existsData. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function R.isMakePermitted.
 
@@ -562,8 +596,7 @@ Order is then placed on the selected exchange through the exchangeAdapter contra
 
 The order is filled on the selected exchange (In future, can be any compatible decentralized exchange like OasisDex, Kyber, e.t.c) when the price is met.
 
-
-\subsubsection{Manager takes an orders}
+\subsection{Manager takes an orders}
 
 Manager can take an order by specifying an order id and quantity as parameters. Asset pair is checked against datafeed module DF through the function DF.existsData. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function R.isTakePermitted.
 
@@ -571,13 +604,13 @@ The specified quantity of the asset is given allowance to the selected exchangin
 
 Order id must correspond to a valid, existing order on the selected exchange. Order is then placed on the selected exchange through the exchangeAdapter contract E via E.takeOrder by specifying the exchange and order parameters as parameters.
 
-\subsubsection{Manager converts rewards into shares}
+\subsection{Manager converts rewards into shares}
 
 Manager rewards in the form of ownerless shares of the fund F can be allocated to the manager via F.convertUnclaimedRewards function. Ownerless shares refer to the quantity of shares, representing unclaimed rewards by the Manager such as rewards for managing the fund and for performance. First internal stats of F are calculated using F.performCalculations function. The quantity of unclaimedRewards is calculated internally using calcUnclaimedRewards function.
 
 A share quantity of unclaimedRewards * gav (from Calculations) is assigned to the manager.
 
-\subsubsection{Manager shuts down the fund}
+\subsection{Manager shuts down the fund}
 
 A Manager can shut down a fund F he owns via F.shutdown function.
 

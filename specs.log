@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.10.24)  14 NOV 2017 20:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.10.24)  14 NOV 2017 20:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -168,36 +168,48 @@ LaTeX Font Info:    ... okay on input line 352.
 
 -- Lines per column: 56 (exact).
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 482.
+(Font)              <7> on input line 490.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 482.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 504.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 504.
-
-Overfull \hbox (3.32083pt too wide) in paragraph at lines 509--509
-[]\OT1/ptm/m/n/8 managementRewardRate| 
- []
-
-
-Overfull \hbox (2.8649pt too wide) in paragraph at lines 510--510
-[]\OT1/ptm/m/n/8 performanceRewardRate| 
- []
-
-
-Overfull \hbox (8.77658pt too wide) in paragraph at lines 504--515
- [] 
- []
-
+(Font)              <5> on input line 490.
 [1{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Overfull \hbox (8.77658pt too wide) in paragraph at lines 523--530
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 534.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 534.
+
+Overfull \hbox (3.32083pt too wide) in paragraph at lines 539--539
+[]\OT1/ptm/m/n/8 managementRewardRate| 
+ []
+
+
+Overfull \hbox (2.8649pt too wide) in paragraph at lines 540--540
+[]\OT1/ptm/m/n/8 performanceRewardRate| 
+ []
+
+
+Overfull \hbox (8.77658pt too wide) in paragraph at lines 534--545
  [] 
  []
 
+
+Overfull \hbox (8.77658pt too wide) in paragraph at lines 553--560
+ [] 
+ []
+
+
+Underfull \hbox (badness 4792) in paragraph at lines 609--610
+[]\OT1/ptm/m/n/10 Manager re-wards in the form of own-er-less shares
+ []
+
+
+Underfull \hbox (badness 2970) in paragraph at lines 609--610
+\OT1/ptm/m/n/10 of the fund F can be al-lo-cated to the man-ager via
+ []
+
+[2]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -209,27 +221,28 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[2] (./specs.aux) ) 
+[3
+
+] (./specs.aux) ) 
 Here is how much of TeX's memory you used:
  1686 strings out of 493069
  28257 string characters out of 6138221
- 99389 words of memory out of 5000000
+ 96389 words of memory out of 5000000
  5260 multiletter control sequences out of 15000+600000
  38757 words of font info for 72 fonts, out of 8000000 for 9000
  1140 hyphenation exceptions out of 8191
- 27i,8n,19p,491b,247s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}<
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/font
-s/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/ti
-mes/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
->
-Output written on specs.pdf (2 pages, 84758 bytes).
+ 27i,8n,19p,474b,245s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/time
+s/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on specs.pdf (3 pages, 85712 bytes).
 PDF statistics:
- 40 PDF objects out of 1000 (max. 8388607)
- 28 compressed objects within 1 object stream
+ 43 PDF objects out of 1000 (max. 8388607)
+ 30 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

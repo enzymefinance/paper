@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.10.24)  14 NOV 2017 11:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.11.14)  14 NOV 2017 16:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **specs.tex
 (./specs.tex
-LaTeX2e <2016/03/31>
-Babel <3.9r> and hyphenation patterns for 77 language(s) loaded.
-(/usr/share/texlive/texmf-dist/tex/latex/IEEEtran/IEEEtran.cls
+LaTeX2e <2017-04-15>
+Babel <3.10> and hyphenation patterns for 22 language(s) loaded.
+(/usr/local/texlive/2017basic/texmf-dist/tex/latex/IEEEtran/IEEEtran.cls
 Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
 -- See the "IEEEtran_HOWTO" manual for usage information.
 -- http://www.michaelshell.org/tex/ieeetran/
@@ -19,7 +19,7 @@ Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
 \@IEEEtrantmptoksA=\toks14
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 503.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+(/usr/local/texlive/2017basic/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 -- Using 8.5in x 11in (letter) paper.
@@ -113,29 +113,118 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
 \IEEEPARstartletwidth=\dimen125
 \c@IEEEbiography=\count93
 \@IEEEtranrubishbin=\box27
+) (/usr/local/texlive/2017basic/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+(/usr/local/texlive/2017basic/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count94
+\float@exts=\toks15
+\float@box=\box28
+\@float@everytoks=\toks16
+\@floatcapt=\box29
+)
+(/usr/local/texlive/2017basic/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks17
+\c@algorithm=\count95
+)
+(/usr/local/texlive/2017basic/texmf-dist/tex/latex/algorithmicx/algpseudocode.s
+ty
+Package: algpseudocode 
+
+(/usr/local/texlive/2017basic/texmf-dist/tex/latex/algorithmicx/algorithmicx.st
+y
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count96
+\c@ALG@rem=\count97
+\c@ALG@nested=\count98
+\ALG@tlm=\skip44
+\ALG@thistlm=\skip45
+\c@ALG@Lnr=\count99
+\c@ALG@blocknr=\count100
+\c@ALG@storecount=\count101
+\c@ALG@tmpcounter=\count102
+\ALG@tmplength=\skip46
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
 ) (./specs.aux)
 \openout1 = `specs.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 352.
+LaTeX Font Info:    ... okay on input line 352.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 352.
+LaTeX Font Info:    ... okay on input line 352.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 352.
+LaTeX Font Info:    ... okay on input line 352.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 352.
+LaTeX Font Info:    ... okay on input line 352.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 352.
+LaTeX Font Info:    ... okay on input line 352.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 352.
+LaTeX Font Info:    ... okay on input line 352.
 
 -- Lines per column: 56 (exact).
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 603.
+(Font)              <7> on input line 480.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 603.
+(Font)              <5> on input line 480.
+
+Overfull \hbox (2.50366pt too wide) in paragraph at lines 505--505
+[]\OT1/ptm/m/n/10 referenceAsset| 
+ []
+
+
+Overfull \hbox (43.27338pt too wide) in paragraph at lines 506--506
+[]\OT1/ptm/m/n/10 managementRewardRate| 
+ []
+
+
+Overfull \hbox (42.70346pt too wide) in paragraph at lines 507--507
+[]\OT1/ptm/m/n/10 performanceRewardRate| 
+ []
+
+
+Overfull \hbox (11.62202pt too wide) in paragraph at lines 501--512
+ [] 
+ []
+
+
+Overfull \hbox (14.35368pt too wide) in paragraph at lines 524--524
+[]\OT1/ptm/m/n/10 incentiveQuantity| 
+ []
+
+
+Overfull \hbox (11.62202pt too wide) in paragraph at lines 519--526
+ [] 
+ []
+
+[1{/usr/local/texlive/2017basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+
+]
+Overfull \hbox (6.5638pt too wide) in paragraph at lines 541--541
+[]\OT1/ptm/m/n/10 receiveQuantity| 
+ []
+
+
+Overfull \hbox (14.35368pt too wide) in paragraph at lines 542--542
+[]\OT1/ptm/m/n/10 incentiveQuantity| 
+ []
+
+
+Overfull \hbox (11.62202pt too wide) in paragraph at lines 537--544
+ [] 
+ []
+
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 603.
+(Font)              <8> on input line 708.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 708.
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -147,29 +236,28 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[1{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}
-
-
-
-]
-(./specs.aux) ) 
+[2] (./specs.aux) ) 
 Here is how much of TeX's memory you used:
- 1061 strings out of 493069
- 19364 string characters out of 6138221
- 78807 words of memory out of 5000000
- 4655 multiletter control sequences out of 15000+600000
- 37650 words of font info for 71 fonts, out of 8000000 for 9000
- 1140 hyphenation exceptions out of 8191
- 26i,7n,19p,292b,236s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr
-/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/ti
-mes/utmri8a.pfb>
-Output written on specs.pdf (1 page, 46735 bytes).
+ 1686 strings out of 494437
+ 28447 string characters out of 6166644
+ 89482 words of memory out of 5000000
+ 5073 multiletter control sequences out of 15000+600000
+ 38757 words of font info for 72 fonts, out of 8000000 for 9000
+ 322 hyphenation exceptions out of 8191
+ 27i,8n,19p,491b,247s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017basic/texmf-dist/fonts/enc/dvips/bas
+e/8r.enc}</usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/urw/ti
+mes/utmb8a.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/urw/times/u
+tmbi8a.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/urw/times/utmr8
+a.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/urw/times/utmri8a.pf
+b>
+Output written on specs.pdf (2 pages, 83933 bytes).
 PDF statistics:
- 25 PDF objects out of 1000 (max. 8388607)
- 17 compressed objects within 1 object stream
+ 40 PDF objects out of 1000 (max. 8388607)
+ 28 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

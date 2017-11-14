@@ -384,14 +384,8 @@
 %Telephone: (800) 555--1212, Fax: (888) 555--1212}
 %\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
 
-
-
-
 % use for special paper notices
 %\IEEEspecialpapernotice{(Invited Paper)}
-
-
-
 
 % make the title area
 \maketitle
@@ -452,16 +446,24 @@ we can now build smart contracts that act as fully functional investment funds.
 To manage their holdings these investment funds use decentralised exchanges to buy and sell assets.
 
 
-
 \section{Investment Funds Design}
 
 \subsection{Governance}
 
+The main functionality of the Governance contract is to add new protocol versions such as this Version contract and to shut down existing versions once they become obsolete.
+
+Adding new protocol version is done by anyone proposing a version to be added and is executed once authority consensus has been established.
+
+Shutting down an existing protocol version is done by anyone proposing a version to be shut down and is executed once authority consensus has been established.
+
+Shutting down a version disables the ability to setup new funds using this version and enables anyone to shut down any existing funds of this version.
+
 \subsection{Investment Fund}
 
-\subsubsection{Custodian}
+Melon fund as a smart contract that acts as the custodian and accountant. Broadly speaking a Melon fund should be capable of accepting/executing subscription and redemption requests, make orders on an exchange, take orders on an exchange and
+receiving management and performance rewards.
 
-\subsubsection{Fund accountant}
+A Melon fund is created by triggering the Solidity function version.setupFund(P) on the latest protocol version contract. Where the input parameters P are:
 
 \subsection{Modules}
 

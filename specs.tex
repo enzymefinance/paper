@@ -348,6 +348,8 @@
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
+% suppress indentation at beginning of paragraphs
+\usepackage[parfill]{parskip}
 
 \begin{document}
 %
@@ -389,7 +391,6 @@
 
 % make the title area
 \maketitle
-
 
 \begin{abstract}
 %\boldmath
@@ -467,9 +468,32 @@ A Melon fund is created by triggering a Solidity function in the version contrac
 
 \subsection{Modules}
 
-Melon has six different module classes: Exchange Adapters, Rewards, Participation, Risk Management, Asset registrar and  Data feed.
+Functionality outside the core Fund logic is provided by \textit{Melon modules}. These modules interact with the Fund in a standardized way, depending on their type.
+This enables modules to be interchangeable within their class, such that two modules of the same class may fill the same \textit{role}, albeit with differing logic, parameters or other characteristics.
 
-Which can be categorized into three sub sets: Libraries, Boolean functions and Infrastructure.
+Modules, operating outside the core of the protocol, may be built by third parties without the permission of Melon protocol maintainers.
+\textit{Module builders} are incentivised to create and maintain modules through an inflation mechanism built into the protocol. 
+They are rewarded with Melon tokens based on some usage characteristics for their module.
+
+Melon has six different module classes:
+
+\begin{itemize}
+  \item Exchange Adapters
+  \item Rewards
+  \item Participation
+  \item Risk Management
+  \item Asset registrar
+  \item Datafeed
+\end{itemize}
+
+% TODO: maybe just label the above entries with their category?
+These classes can be categorized into three subsets:
+
+\begin{itemize}
+  \item Libraries
+  \item Boolean functions
+  \item Infrastructure
+\end{itemize}
 
 \section{Specifications}
 
@@ -617,13 +641,13 @@ This section describes how the three main agents of the Melon protocol interact 
 
 The three main agents being: Investor, Manager, Module Operator.
 
-\subsection{Operater operates Asset registrar}
+\subsection{Operator operates Asset registrar}
 
-\subsection{Operater operates Data feed}
+\subsection{Operator operates Data feed}
 
-\subsection{Operater operates Participation module}
+\subsection{Operator operates Participation module}
 
-\subsection{Operater operates Risk management module}
+\subsection{Operator operates Risk management module}
 
 \subsection{Manager sets up a new Melon fund}
 
@@ -696,7 +720,7 @@ Order is then placed on the selected exchange through the exchangeAdapter contra
 
 The order is filled on the selected exchange (In future, can be any compatible decentralized exchange like OasisDex, Kyber, e.t.c) when the price is met.
 
-\subsection{Manager takes an orders}
+\subsection{Manager takes an order}
 
 Manager can take an order by specifying an order id and quantity as parameters. Asset pair is checked against datafeed module DF through the function \textit{DF.existsData}. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function \textit{R.isTakePermitted}.
 

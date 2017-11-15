@@ -671,7 +671,9 @@ A new Melon fund can be setup by specifying the following parameters via setupFu
 \subsection{Participant invests in a Melon fund} \label{invest}
 % TODO: insert formatting for function names and other entities in this and next section
 
-A participant starts to invest in a fund \textit{F} by first creating a subscription request \textit{R}. Parameters to be specified are:
+A participant starts to invest in a fund \textit{F} by first creating a subscription request \textit{R}.
+
+Parameters to be specified are:
 
 \begin{center}
 		\footnotesize
@@ -684,9 +686,9 @@ A participant starts to invest in a fund \textit{F} by first creating a subscrip
 	\end{tabular}
 \end{center}
 
-R parameters are checked against restriction rules specified in the participation module P by the boolean function P.isSubscriptionPermitted (E.g Participant being an attested Uport identity).
+Properties of \textit{R} are checked against restriction rules specified in the participation module \textit{P} by the boolean function \textit{isSubscriptionPermitted} (e.g checking whether a participant has an attested Uport identity).
 
-R is then executed in by any entity via F.executeRequest after certain conditions are satisfied. These conditions include if currentTimestamp - R.timestamp >= DF.INTERVAL (DF refers to datafeed module and INTERVAL corresponds to update frequency value) and if DF.getLastUpdateId >= R.lastDataFeedUpdateId + 2. This is to minimize unfair advantage from information asymmetries associated with the investor.
+\textit{R} is then executed by some entity calling \textit{executeRequest} after certain conditions are satisfied, described immediately below in \ref{delayed-requests}.
 
 \subsubsection{Delayed requests} \label{delayed-requests}
 
@@ -711,7 +713,9 @@ Said differently, by delaying execution of an investment to $i+2$, $A$'s informa
 
 \subsection{Participant redeems from a Melon fund} \label{redeem}
 
-A participant can redeem from a fund by first creating a redemption request. Parameters to be specified are:
+A participant can redeem from a fund by first creating a redemption request.
+
+Parameters to be specified are:
 
 \begin{center}
 		\footnotesize
@@ -724,9 +728,9 @@ A participant can redeem from a fund by first creating a redemption request. Par
 	\end{tabular}
 \end{center}
 
-Request parameters are checked against restriction rules specified in the participation module P via the boolean function P.isRedemptionPermitted.
+Properties of \textit{R} are checked against restriction rules specified in the participation module \textit{P} via the boolean function \textit{isRedemptionPermitted}.
 
-R is then executed in the way described in \ref{invest}.
+\textit{R} is then executed in the way described in \ref{invest}, with a delay as described in \ref{delayed-requests}.
 
 \subsection{Manager toggles subscription}
 

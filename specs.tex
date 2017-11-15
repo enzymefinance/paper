@@ -669,7 +669,6 @@ A new Melon fund can be setup by specifying the following parameters via setupFu
 \end{center}
 
 \subsection{Participant invests in a Melon fund} \label{invest}
-% TODO: insert formatting for function names and other entities in this and next section
 
 A participant starts to invest in a fund \textit{F} by first creating a subscription request \textit{R}.
 
@@ -732,7 +731,8 @@ Properties of \textit{R} are checked against restriction rules specified in the 
 
 \textit{R} is then executed in the way described in \ref{invest}, with a delay as described in \ref{delayed-requests}.
 
-Redemptions from a Melon fund can be requested as either (i) a redemption directly in MLN, or (ii) redeeming a \textit{slice} of the fund's allocation, proportional to the amount of shares being redeemed.
+Redemptions from a Melon fund can be requested as either (i) a redemption for the shares directly in reference asset, or (ii) redeeming a \textit{slice} of the fund's allocation, proportional to the amount of shares being redeemed.
+The formula for slice allocation is defined in \ref{accounting}.
 
 \subsection{Manager toggles subscription}
 
@@ -743,9 +743,9 @@ When disabled, subscriptions can no longer be requested by prospective investors
 
 \subsection{Manager toggles redemption}
 
-Similar to above, a manager may also disable redemption \textit{in MLN}.
+Similar to above, a manager may also disable redemption \textit{in reference asset}.
 
-The option to redeem in slices, as described in \ref{redeem}
+The option to redeem in slices, as described in \ref{redeem}, is always available. This prevents a large redemption from disturbing the fund's reference asset allocation.
 
 \subsection{Manager makes an order}
 
@@ -755,7 +755,7 @@ The specified quantity of the asset is given allowance to the selected exchangin
 
 Order is then placed on the selected exchange through the exchangeAdapter contract E via \textit{E.makeOrder} by specifying the exchange and order parameters as parameters.
 
-The order is filled on the selected exchange (In future, can be any compatible decentralized exchange like OasisDex, Kyber, e.t.c) when the price is met.
+The order is filled on the selected exchange (in the future, this could be any compatible decentralized exchange like OasisDex, Kyber, etc.) when the price is met.
 
 \subsection{Manager takes an order}
 

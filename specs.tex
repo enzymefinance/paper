@@ -518,7 +518,7 @@ Asset registrar module is intended for registering assets and information associ
 	\end{tabular}
 \end{center}
 
-\subsection{Data Feed}
+\subsection{Data Feed}  \label{data-feed}
 
 Data feeds are instances of smart contracts that route external data which include asset prices into smart contracts. These inputs could be staked and validated on-chain in order to prevent incorrect / manipulative inputs.  
 
@@ -641,13 +641,31 @@ This section describes how the three main agents of the Melon protocol interact 
 
 The three main agents being: Investor, Manager, Module Operator.
 
-\subsection{Operator operates Asset registrar}
+\subsection{Operator runs Asset registrar}
 
-\subsection{Operator operates Data feed}
 
-\subsection{Operator operates Participation module}
 
-\subsection{Operator operates Risk management module}
+\subsection{Operator runs Data feed}
+
+A Data feed module requires regular updates from an operator, which act according to the algorithm described in \ref{data-feed}.
+The data injected into the feed is used within the fund for accounting purposes, such as calculating the price of shares.
+The \textit{update} function receives the following inputs:
+
+\begin{center}
+		\footnotesize
+		\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
+		\hline
+		Name & Data Type & Description \\ \hline
+        ofAssets & address[] & Array of asset addresses \\ \hline
+        newPrices & uint[] & Array of asset prices, in terms of reference asset \\ \hline
+		\end{tabular}
+\end{center}
+
+It is the operator's responsibility to call \textit{update} at the interval defined at data feed setup.
+
+\subsection{Operator runs Participation module}
+
+\subsection{Operator runs Risk management module}
 
 \subsection{Manager sets up a new Melon fund}
 

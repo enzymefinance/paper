@@ -526,6 +526,45 @@ Participation module specifies rules for whitelisting investors. It comprises of
 
 \subsection{Exchange Adapter}
 
+Exchange adapter is an adapter between Melon protocol and decentralized exchanges such as OasisDex, Kyber, Bancor. The exact implementation details are dependant on the decentralized exchange to be compatible with, but there are three primary functions.
+
+\textit{makeOrder} can be used to make an order on the given exchange. It takes the following input parameters:
+\begin{center}
+	\footnotesize
+	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
+		\hline
+		Name & Data Type & Description \\ \hline
+		onExchange & address & Address of the exchange \\ \hline
+		sellAsset & address &  Reference price obtained through DataFeed contract \\ \hline
+		buyAsset & address & Asset (as registered in Asset registrar) to be bought \\ \hline
+		sellQuantity & uint & Quantity of sellAsset to be sold \\ \hline
+		buyQuantity & uint & Quantity of buyAsset to be bought \\ \hline
+	\end{tabular}
+\end{center}
+
+\textit{takeOrder} can be used to take a specific order on the given exchange. It takes the following input parameters:
+\begin{center}
+	\footnotesize
+	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
+		\hline
+		Name & Data Type & Description \\ \hline
+		onExchange & address & Address of the exchange \\ \hline
+		id & uint & Order id \\ \hline
+		quantity & uint & Quantity of order to be executed (For partial taking) \\ \hline
+	\end{tabular}
+\end{center}
+
+\textit{cancelOrder} can be used to cancel a specific order. It takes the following input parameters:
+\begin{center}
+	\footnotesize
+	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
+		\hline
+		Name & Data Type & Description \\ \hline
+		onExchange & address & Address of the exchange \\ \hline
+		id & uint & Order id \\ \hline
+	\end{tabular}
+\end{center}
+
 \subsection{Risk Management}
 
 Risk management module primarily comprises of two boolean functions \textit{isMakePermitted} and \textit{isTakePermitted} both of which take input the following parameters:

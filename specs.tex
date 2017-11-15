@@ -169,7 +169,7 @@
 
 % *** MATH PACKAGES ***
 %
-%\usepackage[cmex10]{amsmath}
+\usepackage[cmex10]{amsmath}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics. If using
 % it, be sure to load this package with the cmex10 option to ensure that
@@ -195,6 +195,7 @@
 %\usepackage{algorithmic}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{amssymb}	
 % algorithmic.sty was written by Peter Williams and Rogerio Brito.
 % This package provides an algorithmic environment fo describing algorithms.
 % You can use the algorithmic environment in-text or within a figure
@@ -864,10 +865,6 @@ The conclusion goes here.
 
 The authors would like to thank...
 
-
-
-
-
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page
 % adjust value as needed - may need to be readjusted if
@@ -899,6 +896,104 @@ H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
 \end{thebibliography}
 
 
+
+\onecolumn
+
+\appendices
+
+\section{Terminology}\label{app:term}
+
+\begin{description}[\IEEEsetlabelwidth{Portfolio Manager}\IEEEusemathlabelsep]
+	\item[Token] By the term token is meant, a digital token of value adhering to the Ethereum token standard \cite{tokenstandard}.
+	\item[Portfolio] A collection of smart-contracts, divided into a core smart-contract(s) and into auxiliary smart-contracts called modules.
+	\item[Portfolio Manager] Portfolios are managed by one person or a group of persons, referred to as a Portfolio Manager.
+	\item[Module] A module is on or a set of smart-contracts which has an auxiliary functionality to the core smart-contract of the portfolio.
+	\item[Time Step] The term time step means, the time interval between blocks on the Ethereum Blockchain. Where time is taken from the block timestamp issued by the miner. For example $(t_i, t_{i+1}]$ is the time between after block with timestamp $t_i$ and the following block with timestamp $t_{i+1}$.
+\end{description}
+
+\section{Portfolio}\label{app:defportfolio}
+
+Formally we expand the portfolio as follows. Assuming there are $n \in \mathbb{N}$ digital assets available. This constitutes the following vector set $\underline{a}$ of assets:
+\begin{equation}
+\underline{a} = \begin{pmatrix}a_{1}\\ \vdots \\ a_{n}\end{pmatrix}
+\end{equation}
+where $a_k$ is the k-th available asset, for $k \in \mathbb{N}$.
+By convention the first asset $a_1$ represents Ether.
+
+Then the \textit{portfolio} $\underline{h}_m^{t_i}$, is defined as the vector set of asset holdings of a portfolio $m$ at time $t_i$.
+\begin{equation}
+\underline{h}_m^{t_i} = \begin{pmatrix}h_{a_{1}}^{t_i}\\ \vdots \\ h_{a_{n}}^{t_i}\end{pmatrix} \in \mathbb{R}_{\geq 0}^n
+\end{equation}
+where $h_{a_{k}}^{t_i}$ is the amount, in token units of $a_k$, a portfolio $m$ holds at time $t_i$, for $k \in \mathbb{N}$.
+
+\section{Gross Asset Value}\label{app:defgav}
+
+Let $\underline{p}^{t_i}$ be the vector set of asset prices, at time $t_i$. Then $\underline{p}^{t_i}$ is:
+\begin{equation}
+\underline{p}^{t_i} = \begin{pmatrix}p_{a_{1}}^{t_i}\\ \vdots \\ p_{a_{n}}^{t_i}\end{pmatrix} \in \mathbb{R}_{\geq 0}^n
+\end{equation}
+where $p_{a_{k}}^{t_i}$ is the price per token unit of asset $a_k$ in Ether, at time $t_i$, for $k \in \mathbb{N}$.
+
+Note, since by convention $a_1$ represents Ether, and the prices are given in Ether the first price $p_{a_{1}}^{t_i}$ is always equal to one.
+
+The Gross Asset Value or \textit{GAV} $\hat{v}_{h_m}^{t_i}$ in Ether of portfolio $\underline{h}_m^{t_i}$ at time $t_i$ is:
+\begin{equation}
+\hat{v}_{h_m}^{t_i} = \langle \underline{p}^{t_i}, \underline{h}_m^{t_i}\rangle = \sum_{k=1}^{n} p_{a_{k}}^{t_i}h_{a_{k}}^{t_i}
+\end{equation}
+with the standard scalar product on $\mathbb{R}^n$. The GAV can be seen as the gross \textit{value} of the portfolio.
+
+\section{Net Asset Value}\label{app:defnav}
+
+The Net Asset Value or \textit{NAV} $v_{h_m}^{t_i}$ in Ether of portfolio $\underline{h}_m^{t_i}$ at time $t_i$ is:
+\begin{equation}
+v_{h_m}^{t_i} = \hat{v}_{h_m}^{t_i} - \textit{Management Fees}^{t_i} - \textit{Performance Fees}^{t_i}
+\end{equation}
+
+$\textit{Management Fees}^{t_i}$ resp. $\textit{Performance Fees}^{t_i}$ is the management resp. performance fees given to the Portfolio Manager for timestep $t_i$.
+
+\section{Delta}\label{app:defdelta}
+
+To define the \textit{Delta} $\Delta_{(t_i, t_j]}$ of a portfolio $m$, within the time $(t_i, t_j]$, where $t_i < t_j$, we first define the Delta of $\Delta_{(t_i, t_{i+1}]}$, i.e. the Delta of a single time step.
+Let be:
+\begin{eqnarray*}
+	t_0 &=& \textit{time of contract creation} \\
+	t_l &=& \textit{time of first investment} \\
+	&=& \min_{t_k \in [t_0, t_i]} \{v_{h_m}^{t_k} \neq 0\} \\
+	I^{t_i} &=& \textit{Sum of all investments within $(t_{i-1}, t_i]$} \\
+	W^{t_i} &=& \textit{Sum of all withdrawals within $(t_{i-1}, t_i]$}
+\end{eqnarray*}
+Where both $I^{t_i}$ and $W^{t_i}$ is a value in Ether. Then the Delta of a single time step is:
+\begin{equation}
+\Delta_{(t_i, t_{i+1}]} = 
+\frac{v_{h_m}^{t_{i+1}} - 
+	I^{t_{i +1}} + W^{t_{i +1}}}{v_{h_m}^{t_i}}
+\end{equation}
+
+By design, the Delta of a portfolio, is independent of funds invested or withdrawn within the time $(t_i, t_{i+1}]$. By factoring together these Deltas of single time steps we get the general definition of the Delta $\Delta_{(t_i, t_j]}$ of a portfolio $m$ as:
+\begin{equation}
+\Delta_{(t_i, t_j]} = \begin{cases}
+1 & \text{if} \quad t_j \leq t_l \\
+\prod\limits_{k = l}^{j - 1} \Delta_{(t_k, t_{k + 1}]} & \text{if} \quad t_i < t_l < t_j \wedge  v_{h_m}^{t_k} \neq 0, \, k \in \{l, l + 1, \hdots, j - 1\}\\
+\prod\limits_{k = i}^{j - 1} \Delta_{(t_k, t_{k + 1}]} & \text{if} \quad t_l \leq t_i \wedge  v_{h_m}^{t_k} \neq 0, \, k \in \{i, i + 1, \hdots, j - 1\}\\
+0 & \text{otherwise}
+\end{cases}
+\end{equation}
+Note, the case where $t_i < t_l < t_j$ and $v_{h_m}^{t_k} = 0$, for a $k \in \{l, l + 1, \hdots, j - 1\}$ is when the first investment has been made but the funds have been withdrawn completely at some point within time $(t_l, t_{j-1}]$. The GAV in this case can not be calculated by factoring together Deltas of single time steps, as this would mean a division through zero. The Delta in this case is set to $0$ for all times, even if the portfolio receives investments in the future. The same is true for the second similar case where $t_l \leq t_i$ and $v_{h_m}^{t_k} = 0$, for a $k \in \{i, i + 1, \hdots, j - 1\}$.
+
+By induction, we can see that the Delta $\Delta_{(t_i, t_j]}$ remains independent of funds invested or withdrawn within the time $(t_i, t_j]$.
+
+\section{Net Asset Value per Share}\label{app:defnavps}
+
+Expressed mathematically the \textit{NAV} per share $p_{m}^{t_i}$  of portfolio $m$, at time $t_i$ is:
+\begin{equation}
+p_{m}^{t_i} = \Delta_{(t_0, t_i]}
+\end{equation}
+
+where $t_0$ is the time of contract creation. The price $p_{m}^{t_i}$ is denominated in Ether. 
+
+\section{Share Price}\label{app:defshareprice}
+
+The share price is defined by the Net Asset Value per Share (see appendix \ref{app:defnavps}) and is denominated in Ether.
 
 
 % that's all folks

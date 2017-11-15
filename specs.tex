@@ -475,6 +475,25 @@ Which can be categorized into three sub sets: Libraries, Boolean functions and I
 
 \subsection{Asset Registrar}
 
+Asset registrar module is intended for registering assets and information associated with them on-chain. Subsequent modules check if an asset is registered in the Asset registration before performing different operations. Registration can be done via the register function that takes the following parameters:
+
+\begin{center}
+	\footnotesize
+	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
+		\hline
+		Name & Data Type & Description \\ \hline
+		ofAsset & address & A human readable name of the fund \\ \hline
+		name & string & Human-readable name of the Asset as in ERC223 token standard \\ \hline
+		symbol & string & Human-readable symbol of the Asset as in ERC223 token standard \\ \hline
+		decimal & uint & Number of decimals for precision \\ \hline
+		url & string & for extended information of the assetn \\ \hline
+		ipfsHash & bytes32 & Same as url but for ipfs \\ \hline
+		chainId & bytes32 & Chain where the asset resides \\ \hline
+		breakIn & address & Address of break in contract on destination chain \\ \hline
+		breakOut & address & Address of break out contract on this chain \\ \hline
+	\end{tabular}
+\end{center}
+
 \subsection{Data Feed}
 
 Data feeds are instances of smart contracts that route external data which include asset prices into smart contracts. These inputs could be staked and validated on-chain in order to prevent incorrect / manipulative inputs.  
@@ -503,9 +522,29 @@ Data feed uses update to periodically update prices of all the assets in one pas
 
 \subsection{Participation}
 
+Participation module specifies rules for whitelisting investors. It comprises of two boolean functions \textit{isSubscriptionPermitted} and \textit{isRedemptionPermitted} which enforce rules to check if a particular address is allowed to invest and redeem from the fund. The functions \textit{attestForIdentity} and \textit{removeAttestion} both of which take a single parameter of the participant address can be used to add or remove  the participant address from the whitelist respectively. 
+
 \subsection{Exchange Adapter}
 
 \subsection{Risk Management}
+
+Risk management module primarily comprises of two boolean functions \textit{isMakePermitted} and \textit{isTakePermitted} both of which take input the following parameters:
+
+\begin{center}
+	\footnotesize
+	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
+		\hline
+		Name & Data Type & Description \\ \hline
+		orderPrice & uint & Price of Order \\ \hline
+		referencePrice & uint &  Reference price obtained through DataFeed contract \\ \hline
+		sellAsset & address & Asset (as registered in Asset registrar) to be sold \\ \hline
+		buyAsset & address & Asset (as registered in Asset registrar) to be bought \\ \hline
+		sellQuantity & uint & Quantity of sellAsset to be sold \\ \hline
+		buyQuantity & uint & Quantity of buyAsset to be bought \\ \hline
+	\end{tabular}
+\end{center}
+
+Custom logic can be defined based on the input parameters that enforces the behaviour of those two boolean functions. (Example: return true if orderPrice >= referencePrice). 
 
 \subsection{Version}
 

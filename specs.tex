@@ -481,7 +481,7 @@ Data feeds are instances of smart contracts that route external data which inclu
 
 Data feed uses update to periodically update prices of all the assets in one pass.
 
-getReferencePrice can be used to query the price of any given asset in reference to the reference asset. Reference asset or quote asset is set during contract creation.
+\textit{getReferencePrice} can be used to query the price of any given asset in reference to the reference asset. Reference asset or quote asset is set during contract creation.
 
 \begin{algorithm}
 	\caption{Update algorithm}
@@ -581,9 +581,9 @@ A participant starts to invest in a fund F by first creating a subscription requ
 	\end{tabular}
 \end{center}
 
-R parameters are checked against restriction rules specified in the participation module P by the boolean function P.isSubscriptionPermitted (E.g Participant being an attested Uport identity).
+R parameters are checked against restriction rules specified in the participation module P by the boolean function \textit{P.isSubscriptionPermitted} (E.g Participant being an attested Uport identity).
 
-R is then executed in by any entity via F.executeRequest after certain conditions are satisfied. These conditions include if currentTimestamp - R.timestamp >= DF.INTERVAL (DF refers to datafeed module and INTERVAL corresponds to update frequency value) and if DF.getLastUpdateId >= R.lastDataFeedUpdateId + 2. This is to minimize unfair advantage from information asymmetries associated with the investor.
+R is then executed in by any entity via \textit{F.executeRequest} after certain conditions are satisfied. These conditions include if currentTimestamp - \textit{R.timestamp >= DF.INTERVAL} (DF refers to datafeed module and INTERVAL corresponds to update frequency value) and if \textit{DF.getLastUpdateId >= R.lastDataFeedUpdateId + 2}. This is to minimize unfair advantage from information asymmetries associated with the investor.
 
 \subsection{Investor redeems from a Melon fund}
 
@@ -600,7 +600,7 @@ A participant can redeem from a fund by first creating a redemption request. Par
 	\end{tabular}
 \end{center}
 
-Request parameters are checked against restriction rules specified in the participation module P via the boolean function P.isRedemptionPermitted.
+Request parameters are checked against restriction rules specified in the participation module P via the boolean function \textit{P.isRedemptionPermitted}.
 
 R is then executed in a similar way as mentioned earlier.
 
@@ -610,31 +610,31 @@ R is then executed in a similar way as mentioned earlier.
 
 \subsection{Manager makes an order}
 
-Manager can make an order by specifying asset pair, sell and buy quantities as parameters. Asset pair is checked against datafeed module DF through the function DF.existsData. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function R.isMakePermitted.
+Manager can make an order by specifying asset pair, sell and buy quantities as parameters. Asset pair is checked against datafeed module DF through the function \textit{DF.existsData}. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function \textit{R.isMakePermitted}.
 
 The specified quantity of the asset is given allowance to the selected exchanging via ERC20's approve function.
 
-Order is then placed on the selected exchange through the exchangeAdapter contract E via E.makeOrder by specifying the exchange and order parameters as parameters.
+Order is then placed on the selected exchange through the exchangeAdapter contract E via \textit{E.makeOrder} by specifying the exchange and order parameters as parameters.
 
 The order is filled on the selected exchange (In future, can be any compatible decentralized exchange like OasisDex, Kyber, e.t.c) when the price is met.
 
 \subsection{Manager takes an orders}
 
-Manager can take an order by specifying an order id and quantity as parameters. Asset pair is checked against datafeed module DF through the function DF.existsData. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function R.isTakePermitted.
+Manager can take an order by specifying an order id and quantity as parameters. Asset pair is checked against datafeed module DF through the function \textit{DF.existsData}. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function \textit{R.isTakePermitted}.
 
 The specified quantity of the asset is given allowance to the selected exchanging via ERC20's approve function.
 
-Order id must correspond to a valid, existing order on the selected exchange. Order is then placed on the selected exchange through the exchangeAdapter contract E via E.takeOrder by specifying the exchange and order parameters as parameters.
+Order id must correspond to a valid, existing order on the selected exchange. Order is then placed on the selected exchange through the exchangeAdapter contract E via \textit{E.takeOrder} by specifying the exchange and order parameters as parameters.
 
 \subsection{Manager converts rewards into shares}
 
-Manager rewards in the form of ownerless shares of the fund F can be allocated to the manager via F.convertUnclaimedRewards function. Ownerless shares refer to the quantity of shares, representing unclaimed rewards by the Manager such as rewards for managing the fund and for performance. First internal stats of F are calculated using F.performCalculations function. The quantity of unclaimedRewards is calculated internally using calcUnclaimedRewards function.
+Manager rewards in the form of ownerless shares of the fund F can be allocated to the manager via \textit{F.convertUnclaimedRewards} function. Ownerless shares refer to the quantity of shares, representing unclaimed rewards by the Manager such as rewards for managing the fund and for performance. First internal stats of F are calculated using \textit{F.performCalculations} function. The quantity of unclaimedRewards is calculated internally using \textit{calcUnclaimedRewards} function.
 
-A share quantity of unclaimedRewards * gav (from Calculations) is assigned to the manager.
+A share quantity of \textit{unclaimedRewards * gav} (from Calculations) is assigned to the manager.
 
 \subsection{Manager shuts down the fund}
 
-A Manager can shut down a fund F he owns via F.shutdown function.
+A Manager can shut down a fund F he owns via \textit{F.shutdown} function.
 
 Investing, redemption (Only in reference asset, investors can still redeem in the form of percentage of held assets), managing, making / taking orders, convertUnclaimedRewards are rendered disabled.
 % An example of a floating figure using the graphicx package.

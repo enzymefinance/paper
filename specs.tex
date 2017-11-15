@@ -643,7 +643,11 @@ The three main agents being: Investor, Manager, Module Operator.
 
 \subsection{Operator runs Asset registrar}
 
+An asset registrar tracks the universe of assets available for management, and information about each asset.
+The operator is responsible for keeping the registry in check, which may include adding and removing assets.
 
+If an operator desires to register an asset, he must call the \textit{register} function with information about the asset including, but not limited to, its contract address, name, and ticker symbol.
+An operator may de-register an asset simply by calling \textit{remove} with the asset's contract address.
 
 \subsection{Operator runs Data feed}
 

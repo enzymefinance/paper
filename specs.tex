@@ -483,7 +483,7 @@ Melon has six different module classes:
   \item Participation
   \item Risk Management
   \item Asset registrar
-  \item Datafeed
+  \item Data feed
 \end{itemize}
 
 % TODO: maybe just label the above entries with their category?
@@ -524,7 +524,7 @@ Data feeds are instances of smart contracts that route external data which inclu
 
 Data feed uses update to periodically update prices of all the assets in one pass.
 
-\textit{getReferencePrice} can be used to query the price of any given asset in reference to the reference asset. Reference asset or quote asset is set during contract creation.
+getReferencePrice can be used to query the price of any given asset in reference to the reference asset. Reference asset or quote asset is set during contract creation.
 
 \begin{algorithm}
 	\caption{Update algorithm}
@@ -540,7 +540,7 @@ Data feed uses update to periodically update prices of all the assets in one pas
 	\end{algorithmic}
 \end{algorithm}
 
-\subsection{Accounting}
+\subsection{Accounting} \label{accounting}
 
 \subsection{Rewards}
 
@@ -668,9 +668,10 @@ A new Melon fund can be setup by specifying the following parameters via setupFu
 		\end{tabular}
 \end{center}
 
-\subsection{Investor invests in a Melon fund}
+\subsection{Participant invests in a Melon fund} \label{invest}
+% TODO: insert formatting for function names and other entities in this and next section
 
-A participant starts to invest in a fund F by first creating a subscription request R. Parameters to be specified are:
+A participant starts to invest in a fund \textit{F} by first creating a subscription request \textit{R}. Parameters to be specified are:
 
 \begin{center}
 		\footnotesize
@@ -683,11 +684,32 @@ A participant starts to invest in a fund F by first creating a subscription requ
 	\end{tabular}
 \end{center}
 
-R parameters are checked against restriction rules specified in the participation module P by the boolean function \textit{P.isSubscriptionPermitted} (E.g Participant being an attested Uport identity).
+R parameters are checked against restriction rules specified in the participation module P by the boolean function P.isSubscriptionPermitted (E.g Participant being an attested Uport identity).
 
-R is then executed in by any entity via \textit{F.executeRequest} after certain conditions are satisfied. These conditions include if currentTimestamp - \textit{R.timestamp >= DF.INTERVAL} (DF refers to datafeed module and INTERVAL corresponds to update frequency value) and if \textit{DF.getLastUpdateId >= R.lastDataFeedUpdateId + 2}. This is to minimize unfair advantage from information asymmetries associated with the investor.
+R is then executed in by any entity via F.executeRequest after certain conditions are satisfied. These conditions include if currentTimestamp - R.timestamp >= DF.INTERVAL (DF refers to datafeed module and INTERVAL corresponds to update frequency value) and if DF.getLastUpdateId >= R.lastDataFeedUpdateId + 2. This is to minimize unfair advantage from information asymmetries associated with the investor.
 
-\subsection{Investor redeems from a Melon fund}
+\subsubsection{Delayed requests} \label{delayed-requests}
+
+The nature of the blockchain means that data can only be delivered in intervals, the minimum interval being a single blocktime.
+Because of this, smart contracts are only able to receive and operate on data in intervals as well.
+Thus, an agent $A$ with access to real time data could interact with a smart contract $C$ between data delivery intervals, and have an information advantage over the contract.
+
+To describe the vulnerability of this model in terms of a Melon fund, let us assume that the share price $S$ is defined as in \ref{accounting}, and that $S$ is calculated at regular intervals $I$, such that $I$ is some number of blocktimes.
+
+We use $S_i$ to denote the share price calculated at the last interval $i$.
+
+With no restrictions, $A$ could notice an increasing share price and invest before the next interval, such that $S_i < S_{i+1}$, allowing $A$ to game the system.
+Note that the same principle applies for selling shares with a decreasing price.
+
+To eliminate this advantage, we have decided to delay investment \textit{execution} time by at minimum one interval.
+
+This way, if $A$ invested between intervals $i$ and $i+1$ it would only have its investment executed at $i+2$.
+
+Here, the most $A$ can know is $S_{i+1}$, which contract $C$ knows as well, since it coincides with data delivery interval $i+1$.
+
+Said differently, by delaying execution of an investment to $i+2$, $A$'s information collapses to that of $C$ at $i+1$.
+
+\subsection{Participant redeems from a Melon fund} \label{redeem}
 
 A participant can redeem from a fund by first creating a redemption request. Parameters to be specified are:
 
@@ -702,9 +724,9 @@ A participant can redeem from a fund by first creating a redemption request. Par
 	\end{tabular}
 \end{center}
 
-Request parameters are checked against restriction rules specified in the participation module P via the boolean function \textit{P.isRedemptionPermitted}.
+Request parameters are checked against restriction rules specified in the participation module P via the boolean function P.isRedemptionPermitted.
 
-R is then executed in a similar way as mentioned earlier.
+R is then executed in the way described in \ref{invest}.
 
 \subsection{Manager toggles subscription}
 
@@ -712,31 +734,31 @@ R is then executed in a similar way as mentioned earlier.
 
 \subsection{Manager makes an order}
 
-Manager can make an order by specifying asset pair, sell and buy quantities as parameters. Asset pair is checked against datafeed module DF through the function \textit{DF.existsData}. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function \textit{R.isMakePermitted}.
+Manager can make an order by specifying asset pair, sell and buy quantities as parameters. Asset pair is checked against datafeed module DF through the function DF.existsData. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function R.isMakePermitted.
 
 The specified quantity of the asset is given allowance to the selected exchanging via ERC20's approve function.
 
-Order is then placed on the selected exchange through the exchangeAdapter contract E via \textit{E.makeOrder} by specifying the exchange and order parameters as parameters.
+Order is then placed on the selected exchange through the exchangeAdapter contract E via E.makeOrder by specifying the exchange and order parameters as parameters.
 
 The order is filled on the selected exchange (In future, can be any compatible decentralized exchange like OasisDex, Kyber, e.t.c) when the price is met.
 
 \subsection{Manager takes an order}
 
-Manager can take an order by specifying an order id and quantity as parameters. Asset pair is checked against datafeed module DF through the function \textit{DF.existsData}. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function \textit{R.isTakePermitted}.
+Manager can take an order by specifying an order id and quantity as parameters. Asset pair is checked against datafeed module DF through the function DF.existsData. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function R.isTakePermitted.
 
 The specified quantity of the asset is given allowance to the selected exchanging via ERC20's approve function.
 
-Order id must correspond to a valid, existing order on the selected exchange. Order is then placed on the selected exchange through the exchangeAdapter contract E via \textit{E.takeOrder} by specifying the exchange and order parameters as parameters.
+Order id must correspond to a valid, existing order on the selected exchange. Order is then placed on the selected exchange through the exchangeAdapter contract E via E.takeOrder by specifying the exchange and order parameters as parameters.
 
 \subsection{Manager converts rewards into shares}
 
-Manager rewards in the form of ownerless shares of the fund F can be allocated to the manager via \textit{F.convertUnclaimedRewards} function. Ownerless shares refer to the quantity of shares, representing unclaimed rewards by the Manager such as rewards for managing the fund and for performance. First internal stats of F are calculated using \textit{F.performCalculations} function. The quantity of unclaimedRewards is calculated internally using \textit{calcUnclaimedRewards} function.
+Manager rewards in the form of ownerless shares of the fund F can be allocated to the manager via F.convertUnclaimedRewards function. Ownerless shares refer to the quantity of shares, representing unclaimed rewards by the Manager such as rewards for managing the fund and for performance. First internal stats of F are calculated using F.performCalculations function. The quantity of unclaimedRewards is calculated internally using calcUnclaimedRewards function.
 
-A share quantity of \textit{unclaimedRewards * gav} (from Calculations) is assigned to the manager.
+A share quantity of unclaimedRewards * gav (from Calculations) is assigned to the manager.
 
 \subsection{Manager shuts down the fund}
 
-A Manager can shut down a fund F he owns via \textit{F.shutdown} function.
+A Manager can shut down a fund F he owns via F.shutdown function.
 
 Investing, redemption (Only in reference asset, investors can still redeem in the form of percentage of held assets), managing, making / taking orders, convertUnclaimedRewards are rendered disabled.
 % An example of a floating figure using the graphicx package.

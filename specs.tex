@@ -511,6 +511,28 @@ getReferencePrice can be used to query the price of any given asset in reference
 
 \subsection{Governance}
 
+Governance uses \textit{ds-group} module to require and establish consensus of authorities for the operations of adding and shutting down versions. Governance contract is first created by specifying the following parameters:
+
+\begin{center}
+	\footnotesize
+	\begin{tabular}{ | p{2cm} | p{1.2cm} | p{4cm} | }
+		\hline
+		Name & Data Type & Description \\ \hline
+		ofAuthorities & address[] & Array of addresses of authorities \\ \hline
+		ofQuorum & uint & Minimum number of signatures from authorities required for proposal to pass by \\ \hline
+		ofWindow & uint & Time limit for proposal validity \\ \hline
+	\end{tabular}
+\end{center}
+
+
+\textit{proposeVersion} can be used by an authority to propose a new version address.
+
+\textit{approveVersion} can be used by an authority other than the proposer to specify their endorsement for the new version proposal.  Number of confirmations is incremented.
+
+\textit{triggerVersion} checks if the number of confirmations for that particular version proposal satisfies the quorum condition and adds the proposed version to the version list. 
+
+Shutting down a version follows a similar flow with the methods \textit{proposeShutdown}, \textit{approveShutdown} and \textit{triggerShutdown} instead.
+
 \section{Interactions}
 
 This section describes how the three main agents of the Melon protocol interact with each other.
@@ -531,7 +553,7 @@ A new Melon fund can be setup by specifying the following parameters via setupFu
 
 \begin{center}
 		\footnotesize
-		\begin{tabular}{ | p{2.7cm} | p{1.2cm} | p{4cm} | }
+		\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
 		\hline
 		Name & Data Type & Description \\ \hline
 		name & string & A human readable name of the fund \\ \hline

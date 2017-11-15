@@ -732,9 +732,20 @@ Properties of \textit{R} are checked against restriction rules specified in the 
 
 \textit{R} is then executed in the way described in \ref{invest}, with a delay as described in \ref{delayed-requests}.
 
+Redemptions from a Melon fund can be requested as either (i) a redemption directly in MLN, or (ii) redeeming a \textit{slice} of the fund's allocation, proportional to the amount of shares being redeemed.
+
 \subsection{Manager toggles subscription}
 
+A manager can turn off and on the ability subscribe to (i.e. invest in) their fund.
+The function to do so takes no parameters, and is called \textit{toggleSubscription}.
+
+When disabled, subscriptions can no longer be requested by prospective investors.
+
 \subsection{Manager toggles redemption}
+
+Similar to above, a manager may also disable redemption \textit{in MLN}.
+
+The option to redeem in slices, as described in \ref{redeem}
 
 \subsection{Manager makes an order}
 
@@ -764,7 +775,7 @@ A share quantity of \textit{unclaimedRewards * gav} (from Calculations) is assig
 
 A Manager can shut down a fund \textit{F} he owns via \textit{F.shutdown} function.
 
-Investing, redemption (Only in reference asset, investors can still redeem in the form of percentage of held assets), managing, making / taking orders, convertUnclaimedRewards are rendered disabled.
+Investing, redemption (only in reference asset, investors can still redeem in the form of percentage of held assets), managing, making / taking orders, convertUnclaimedRewards are rendered disabled.
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
 % For figures, \caption should occur after the \includegraphics.

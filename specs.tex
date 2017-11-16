@@ -460,7 +460,7 @@ Shutting down an existing protocol version is done by anyone proposing a version
 
 Shutting down a version disables the ability to setup new funds using this version and enables anyone to shut down any existing funds of this version.
 
-\subsection{Investment Fund}
+\subsection{Investment Fund} \label{fund}
 
 Melon fund as a smart contract that acts as the custodian and accountant. Broadly speaking a Melon fund should be capable of accepting/executing subscription and redemption requests, make orders on an exchange, take orders on an exchange and
 receiving management and performance rewards.
@@ -519,7 +519,7 @@ Asset registrar module is intended for registering assets and information associ
 	\end{tabular}
 \end{center}
 
-\subsection{Data Feed}  \label{data-feed}
+\subsection{Data Feed}  \label{component:data-feed}
 
 Data feeds are instances of smart contracts that route external data which include asset prices into smart contracts. These inputs could be staked and validated on-chain in order to prevent incorrect / manipulative inputs.  
 
@@ -543,7 +543,7 @@ If the input address is just quote asset, the latest updated price from the data
 	\end{algorithmic}
 \end{algorithm}
 
-\subsection{Accounting} \label{accounting}
+\subsection{Accounting} \label{component:accounting}
 
 \subsection{Rewards}
 
@@ -614,7 +614,34 @@ Custom logic can be defined based on the input parameters that enforces the beha
 
 \subsection{Version}
 
-\subsection{Governance}
+The Version contract maps one-to-one with a protocol version, meaning that each deployment of the protocol contains a single Version contract.
+
+The purpose of the deployed Version is to index Funds in each protocol version, and to allow managers to set up and shut down their Funds.
+Indeed, Funds can \textit{only} be created through calling \textit{setupFund} on a particular Version contract (\ref{interaction:setup-fund}).
+Thus, with each particular Version, the interface and initial template of each new fund is identical.
+Likewise, Funds can be shut down with the manager calling \textit{shutDownFund} through the Version with which the Fund was deployed.
+
+This method of deploying Funds lends itself well to Governance; old Versions can be deprecated to eliminate bugs, or new Versions introduced to add features.
+Adding a Version starts with a proposal for a new Version, and is executed when authority consensus is established.
+This process is performed by the Governance contract, and is described in \ref{component:governance}.
+Similarly, a Version contract is deprecated when the Governance contract calls \textit{shutDown} on the Version, again requiring authority consensus.
+This prevents new Funds from being created by this Version, and allows anyone to shut down Funds created through it.
+
+The parameters required for creating a new Version are as follows:
+
+\begin{center}
+	\footnotesize
+	\begin{tabular}{ | p{2cm} | p{1.2cm} | p{4cm} | }
+		\hline
+		Name & Data Type & Description \\ \hline
+		versionNumber & string & Unique identifier for this protocol version \\ \hline
+		ofGovernance & address & The Governance contract responsible for this Version \\ \hline
+		ofMelonAsset & address & The Melon token for the current blockchain  \\ \hline
+	\end{tabular}
+\end{center}
+
+
+\subsection{Governance} \label{component:governance}
 
 Governance uses \textit{ds-group} module to require and establish consensus of authorities for the operations of adding and shutting down versions. Governance contract is first created by specifying the following parameters:
 
@@ -654,7 +681,7 @@ An operator may de-register an asset simply by calling \textit{remove} with the 
 
 \subsection{Operator runs Data feed}
 
-A Data feed module requires regular updates from an operator, which act according to the algorithm described in \ref{data-feed}.
+A Data feed module requires regular updates from an operator, which act according to the algorithm described in \ref{component:data-feed}.
 The data injected into the feed is used within the fund for accounting purposes, such as calculating the price of shares.
 The \textit{update} function receives the following inputs:
 
@@ -674,7 +701,7 @@ It is the operator's responsibility to call \textit{update} at the interval defi
 
 \subsection{Operator runs Risk management module}
 
-\subsection{Manager sets up a new Melon fund}
+\subsection{Manager sets up a new Melon fund}   \label{interaction:setup-fund}
 
 A new Melon fund can be setup by specifying the following parameters via setupFund function of the version contract:
 
@@ -693,7 +720,7 @@ A new Melon fund can be setup by specifying the following parameters via setupFu
 		\end{tabular}
 \end{center}
 
-\subsection{Participant invests in a Melon fund} \label{invest}
+\subsection{Participant invests in a Melon fund} \label{interaction:invest}
 
 A participant starts to invest in a fund \textit{F} by first creating a subscription request \textit{R}.
 
@@ -720,7 +747,7 @@ The nature of the blockchain means that data can only be delivered in intervals,
 Because of this, smart contracts are only able to receive and operate on data in intervals as well.
 Thus, an agent $A$ with access to real time data could interact with a smart contract $C$ between data delivery intervals, and have an information advantage over the contract.
 
-To describe the vulnerability of this model in terms of a Melon fund, let us assume that the share price $S$ is defined as in \ref{accounting}, and that $S$ is calculated at regular intervals $I$, such that $I$ is some number of blocktimes.
+To describe the vulnerability of this model in terms of a Melon fund, let us assume that the share price $S$ is defined as in \ref{component:accounting}, and that $S$ is calculated at regular intervals $I$, such that $I$ is some number of blocktimes.
 
 We use $S_i$ to denote the share price calculated at the last interval $i$.
 
@@ -735,7 +762,7 @@ Here, the most $A$ can know is $S_{i+1}$, which contract $C$ knows as well, sinc
 
 Said differently, by delaying execution of an investment to $i+2$, $A$'s information collapses to that of $C$ at $i+1$.
 
-\subsection{Participant redeems from a Melon fund} \label{redeem}
+\subsection{Participant redeems from a Melon fund} \label{interaction:redeem}
 
 A participant can redeem from a fund by first creating a redemption request.
 
@@ -754,10 +781,10 @@ Parameters to be specified are:
 
 Properties of \textit{R} are checked against restriction rules specified in the participation module \textit{P} via the boolean function \textit{isRedemptionPermitted}.
 
-\textit{R} is then executed in the way described in \ref{invest}, with a delay as described in \ref{delayed-requests}.
+\textit{R} is then executed in the way described in \ref{interaction:invest}, with a delay as described in \ref{delayed-requests}.
 
 Redemptions from a Melon fund can be requested as either (i) a redemption for the shares directly in reference asset, or (ii) redeeming a \textit{slice} of the fund's allocation, proportional to the amount of shares being redeemed.
-The formula for slice allocation is defined in \ref{accounting}.
+The formula for slice allocation is defined in \ref{component:accounting}.
 
 \subsection{Manager toggles subscription}
 
@@ -770,7 +797,7 @@ When disabled, subscriptions can no longer be requested by prospective investors
 
 Similar to above, a manager may also disable redemption \textit{in reference asset}.
 
-The option to redeem in slices, as described in \ref{redeem}, is always available. This prevents a large redemption from disturbing the fund's reference asset allocation.
+The option to redeem in slices, as described in \ref{interaction:redeem}, is always available. This prevents a large redemption from disturbing the fund's reference asset allocation.
 
 \subsection{Manager makes an order}
 

@@ -523,9 +523,11 @@ Asset registrar module is intended for registering assets and information associ
 
 Data feeds are instances of smart contracts that route external data which include asset prices into smart contracts. These inputs could be staked and validated on-chain in order to prevent incorrect / manipulative inputs.  
 
-Data feed uses update to periodically update prices of all the assets in one pass.
+Data feed uses update to periodically update prices of all the assets in one pass. Historic updates are also stored for reference purposes.
 
-getReferencePrice can be used to query the price of any given asset in reference to the reference asset. Reference asset or quote asset is set during contract creation.
+\textit{getReferencePrice} can be used to query the price of any given asset in reference to the reference asset. Reference asset or quote asset is set during contract creation. It takes the address of the asset as the input parameter  for which price should be returned relative to the quote asset. 
+
+If the input address is just quote asset, the latest updated price from the data history is returned. If not, \textit{getInvertedPrice} is called which returns the price based on the formula of (\textit{getDecimals(inputAsset)  * getDecimals(quoteAsset)) / latestPrice(inputAsset)}. It ensures input and quote assets are compatible in terms of precision (decimals).
 
 \begin{algorithm}
 	\caption{Update algorithm}

@@ -500,7 +500,7 @@ These classes can be categorized into three subsets:
 
 \subsection{Asset Registrar}
 
-Asset registrar module is intended for registering assets and information associated with them on-chain. Subsequent modules check if an asset is registered in the Asset registration before performing different operations. Registration can be done via the register function that takes the following parameters:
+Asset registrar module is intended for registering assets and information associated with them on-chain. Subsequent modules can check if an asset is registered in the Asset registration before performing different operations. Registration can be done via the register function that takes the following parameters:
 
 \begin{center}
 	\footnotesize
@@ -519,15 +519,15 @@ Asset registrar module is intended for registering assets and information associ
 	\end{tabular}
 \end{center}
 
+Since storage on-chain is expensive, a url and / or an ipfsHash of the document containing asset information is stored. An ipfsHash is although preferred to ensure data integrity.
+
 \subsection{Data Feed}  \label{data-feed}
 
-Data feeds are instances of smart contracts that route external data which include asset prices into smart contracts. These inputs could be staked and validated on-chain in order to prevent incorrect / manipulative inputs.  
-
-Data feed uses update to periodically update prices of all the assets in one pass. Historic updates are also stored for reference purposes.
+Data feeds are instances of smart contracts that route external data like asset prices into smart contracts. These inputs could be staked and validated on-chain in order to prevent incorrect / manipulative inputs.  Data feed uses the update function to periodically update prices of all the assets in one pass. Historic updates are also stored for reference purposes.
 
 \textit{getReferencePrice} can be used to query the price of any given asset in reference to the reference asset. Reference asset or quote asset is set during contract creation. It takes the address of the asset as the input parameter  for which price should be returned relative to the quote asset. 
 
-If the input address is just quote asset, the latest updated price from the data history is returned. If not, \textit{getInvertedPrice} is called which returns the price based on the formula of (\textit{getDecimals(inputAsset)  * getDecimals(quoteAsset)) / latestPrice(inputAsset)}. It ensures input and quote assets are compatible in terms of precision (decimals).
+If the input address is just quote asset, the latest updated price from the data history is returned. If not, \textit{getInvertedPrice} is called which returns the price based on the formula of (\textit{getDecimals(inputAsset)  * getDecimals(quoteAsset)) / latestPrice(inputAsset)}. It ensures that precisions of input and quote assets are accounted for.
 
 \begin{algorithm}
 	\caption{Update algorithm}
@@ -614,6 +614,8 @@ Custom logic can be defined based on the input parameters that enforces the beha
 
 \subsection{Version}
 
+
+
 \subsection{Governance}
 
 Governance uses \textit{ds-group} module to require and establish consensus of authorities for the operations of adding and shutting down versions. Governance contract is first created by specifying the following parameters:
@@ -672,7 +674,11 @@ It is the operator's responsibility to call \textit{update} at the interval defi
 
 \subsection{Operator runs Participation module}
 
+An operator can use \textit{attestForIdentity} and \textit{removeAttestation} to achieve the vanilla functionality of whitelisting and removing from whitelist an investor. They may also define additional functionality, e.g. requiring the subscribing participant to be in a special whitelist status in case the subscription request is for more than 'n' number of shares.
+
 \subsection{Operator runs Risk management module}
+
+An operator can define custom logic for risk management based on order and reference prices. It can also include dynamic data inputs. E.g. Operator can add checks on orderPrice by aggregating the referencePrices from different exchanges. This can be done by inputting price data from different exchanges on-chain periodically preferrably through a custom data feed module.
 
 \subsection{Manager sets up a new Melon fund}
 

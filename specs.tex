@@ -519,6 +519,8 @@ Asset registrar module is intended for registering assets and information associ
 	\end{tabular}
 \end{center}
 
+Since storage on-chain is expensive, a url and / or an ipfsHash of the document containing asset information is stored. An ipfsHash is although preferred to ensure data integrity.
+
 \subsection{Data Feed}  \label{component:data-feed}
 
 Data feeds are instances of smart contracts that route external data which include asset prices into smart contracts. These inputs could be staked and validated on-chain in order to prevent incorrect / manipulative inputs.  
@@ -699,9 +701,13 @@ It is the operator's responsibility to call \textit{update} at the interval defi
 
 \subsection{Operator runs Participation module}
 
+An operator can use \textit{attestForIdentity} and \textit{removeAttestation} to achieve the vanilla functionality of whitelisting and removing from whitelist an investor. They may also define additional functionality, e.g. requiring the subscribing participant to be in a special whitelist status in case the subscription request is for more than 'n' number of shares.
+
 \subsection{Operator runs Risk management module}
 
-\subsection{Manager sets up a new Melon fund}   \label{interaction:setup-fund}
+An operator can define custom logic for risk management based on order and reference prices. It can also include dynamic data inputs. E.g. Operator can add checks on orderPrice by aggregating the referencePrices from different exchanges. This can be done by inputting price data from different exchanges on-chain periodically preferrably through a custom data feed module.
+
+\subsection{Manager sets up a new Melon fund}	\label{interaction:setup-fund}
 
 A new Melon fund can be setup by specifying the following parameters via setupFund function of the version contract:
 

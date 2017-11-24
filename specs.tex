@@ -612,11 +612,11 @@ Risk management module primarily comprises of two boolean functions \textit{isMa
 	\end{tabular}
 \end{center}
 
-Custom logic can be defined based on the input parameters that enforces the behaviour of those two boolean functions. (Example: return true if orderPrice >= referencePrice). 
+Custom logic can be defined based on the input parameters that enforces the behaviour of those two boolean functions. (Example: return true if $orderPrice >= referencePrice$). 
 
 Our simple flavor of risk management module called RMMakeOrders checks whether the orderPrice falls within the maximum allowed deviation relative to the reference price. It evaluates $orderPrice <= referencePrice - (riskLevel  * referencePrice) / riskDivisor$ and disallows the make or take order if it is true. riskLevel is the magnitude of deviation allowed from reference price. 
 
-The intuition behind it is that the order price should always be higher than or close to the reference price. Order price is directly proportional to the buy quantity and inversely proportional to the sell quantity. It is always beneficial to have the buy quantity as high as possible.
+The intuition behind it is that the order price should always be higher than or close to the reference price. Order price is directly proportional to the buyQuantity and inversely proportional to the sellQuantity. It is always beneficial to have the buyQuantity as high as possible.
 \subsection{Version}
 
 The Version contract maps one-to-one with a protocol version, meaning that each deployment of the protocol contains a single Version contract.

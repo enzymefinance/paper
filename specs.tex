@@ -525,9 +525,11 @@ Data feeds are instances of smart contracts that route external data which inclu
 
 Data feed uses update to periodically update prices of all the assets in one pass. Historic updates are also stored for reference purposes.
 
-\textit{getReferencePrice} can be used to query the price of any given asset in reference to the reference asset. Reference asset or quote asset is set during contract creation. It takes the address of the asset as the input parameter  for which price should be returned relative to the quote asset. 
+\textit{getReferencePrice} can be used to query the price of any given asset in reference to another asset. As of now, It is necessary that either of the assets needs to be the reference asset ($QUOTEASSET$) which is set during contract creation. Following the analogy of currency pair, it takes the addresses of the base and quote assets as the input parameters. The quote asset is used as a reference to return the relative value of the base asset.
 
-If the input address is just quote asset, the latest updated price from the data history is returned. If not, \textit{getInvertedPrice} is called which returns the price based on the formula of (\textit{getDecimals(inputAsset)  * getDecimals(quoteAsset)) / latestPrice(inputAsset)}. It ensures input and quote assets are compatible in terms of precision (decimals).
+If the quote asset is just the reference asset, the latest updated price of the base asset from the data history is returned. If not, \textit{getInvertedPrice} is called which returns the price based on the formula of (\textit{getDecimals(baseAsset)  * getDecimals(quoteAsset)) / latestPrice(baseAsset)}. It basically returns the price of reference asset relative to the base asset. It also ensures input and quote assets are compatible in terms of precision (decimals).
+
+\textit{getOrderPrice} takes the inputs of address of base asset, sellQuantity and buyQuantity. It returns the price of the order based on these inputs using $buyQuantity * (10 ** uint(getDecimals(ofBase))) / (sellQuantity)$. 
 
 \begin{algorithm}
 	\caption{Update algorithm}
@@ -612,6 +614,9 @@ Risk management module primarily comprises of two boolean functions \textit{isMa
 
 Custom logic can be defined based on the input parameters that enforces the behaviour of those two boolean functions. (Example: return true if orderPrice >= referencePrice). 
 
+Our simple flavor of risk management module called RMMakeOrders checks whether the orderPrice falls within the maximum allowed deviation relative to the reference price. It evaluates $orderPrice <= referencePrice - (riskLevel  * referencePrice) / riskDivisor$ and disallows the make or take order if it is true. riskLevel is the magnitude of deviation allowed from reference price. 
+
+The intuition behind it is that the order price should always be higher than or close to the reference price. Order price is directly proportional to the buy quantity and inversely proportional to the sell quantity. It is always beneficial to have the buy quantity as high as possible.
 \subsection{Version}
 
 The Version contract maps one-to-one with a protocol version, meaning that each deployment of the protocol contains a single Version contract.

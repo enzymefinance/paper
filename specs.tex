@@ -562,6 +562,12 @@ where n is the number of registered assets in the asset registrar module. $asset
 
 \subsection{Rewards}
 
+There are essentially two kinds of rewards associated with a fund: performance and management rewards. Both are meant as forms of compenesation for the fund manager. Management reward is proportional to the time of management. Performance reward, on the other hand is solely based on the performance of the fund.
+
+Performance reward  is calculated by the formula $absoluteChange * performanceRewardRate / divisorFee$. $absoluteChange$ refers to the change (only positive) in share price of the fund from the last high-water mark multiplied by the total number of shares. High-water mark ensures that the fund manager is not rewarded for poor performance or rewarded multiple times for the same performance. It is updated each time the fund manager performs rewards redemption (conversion into shares).
+
+Management reward is calculated by the formula $absoluteChange * managementRewardRate / divisorFee$. Where $absoluteChange = timeDifference * gav$.
+
 
 \subsection{Participation}
 

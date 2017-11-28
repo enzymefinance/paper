@@ -552,7 +552,16 @@ $getOrderPrice$ takes the inputs of address of base asset, sellQuantity and buyQ
 
 \subsection{Accounting} \label{component:accounting}
 
+Accounting keeps track of gav (gross asset value) of the fund. It is currently not a separate module but rather a part of the fund contract. Gross asset value is calculated by:
+
+
+$gav = \sum_{k=1}^{n} assetHoldings(a_k) * assetPrice(a_k)$
+
+
+where n is the number of registered assets in the asset registrar module. $assetHoldings(a_k)$  is the quantity of assets of type k held by the fund and $assetPrice(a_k)$ is the price of the asset of type k which is obtained from the datafeed module.
+
 \subsection{Rewards}
+
 
 \subsection{Participation}
 

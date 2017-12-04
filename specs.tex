@@ -126,7 +126,7 @@
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
+  \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
   % \graphicspath{{../pdf/}{../jpeg/}}
   % and their extensions so you won't have to specify these with
@@ -162,8 +162,6 @@
 %
 % You can find documentation about the pdfTeX application at:
 % http://www.tug.org/applications/pdftex
-
-
 
 
 
@@ -433,7 +431,7 @@ Fund administration consists of four parts. Fund Custodian, Fund Accountant, KYC
 
 \subsubsection{Assets}
 
-An example for such computer code is known as the ERC20 standard. Essentially a small (<100 lines of code) piece of software implementing a bitcoin-like cryptocurrency.
+An example for such computer code is known as the ERC20 standard. Essentially a small ($<100$ lines of code) piece of software implementing a bitcoin-like cryptocurrency.
 
 \subsubsection{Exchanges}
 
@@ -452,6 +450,12 @@ To manage their holdings these investment funds use decentralised exchanges to b
 
 \subsection{Governance}
 
+\begin{figure*}[ht!]
+	\centering
+	\includegraphics[width=135mm]{images/governance.png}
+	\caption{Protocol governance linked to versions linked to Melon funds\label{fig:governance}}
+\end{figure*}
+
 The main functionality of the Governance contract is to add new protocol versions such as this Version contract and to shut down existing versions once they become obsolete.
 
 Adding a \textit{new protocol version} is done by anyone proposing a version to be added and is executed once authority consensus has been established.
@@ -468,6 +472,12 @@ receiving management and performance rewards.
 A Melon fund is created by triggering a Solidity function in the version contract.
 
 \subsection{Modules}
+
+\begin{figure*}[ht!]
+	\centering
+	\includegraphics[width=135mm]{images/fund.png}
+	\caption{Melon fund interaction with Melon modules\label{fig:fund}}
+\end{figure*}
 
 Functionality outside the core Fund logic is provided by \textit{Melon modules}. These modules interact with the Fund in a standardized way, depending on their type.
 This enables modules to be interchangeable within their class, such that two modules of the same class may fill the same \textit{role}, albeit with differing logic, parameters or other characteristics.
@@ -521,15 +531,22 @@ Asset registrar module is intended for registering assets and information associ
 
 Since storage on-chain is expensive, a url and / or an ipfsHash of the document containing asset information is stored. An ipfsHash is although preferred to ensure data integrity.
 
+Due to gas limit contraints, the constant field named $maxAssets$ defines the maximum number of assets that can be registered. This number is calculated by checking the maximum number of registered assets $redeemOwnedAssets$ function supports. This specific function is chosen because it is the most gas intensive operation that grows linearly with number of registered assets. 
+
+
+$maxAssets$: ($blockGasLimit$ - $rGas_1$) /  $\Delta_{(rGas_n, rGas_{n-1}]}$ where $rGas_n$ is the worst-case gas consumed by redeemOwnedAssets function for 'n' registered assets.
+
 \subsection{Data Feed}  \label{component:data-feed}
 
 Data feeds are instances of smart contracts that route external data which include asset prices into smart contracts. These inputs could be staked and validated on-chain in order to prevent incorrect / manipulative inputs.  
 
 Data feed uses update to periodically update prices of all the assets in one pass. Historic updates are also stored for reference purposes.
 
-\textit{getReferencePrice} can be used to query the price of any given asset in reference to the reference asset. Reference asset or quote asset is set during contract creation. It takes the address of the asset as the input parameter  for which price should be returned relative to the quote asset. 
+$getReferencePrice$ can be used to query the price of any given asset in reference to another asset. As of now, It is necessary that either of the assets needs to be the reference asset ($quoteAsset$) which is set during contract creation. Following the analogy of currency pair, it takes the addresses of the base and quote assets as the input parameters. The quote asset is used as a reference to return the relative value of the base asset.
 
-If the input address is just quote asset, the latest updated price from the data history is returned. If not, \textit{getInvertedPrice} is called which returns the price based on the formula of (\textit{getDecimals(inputAsset)  * getDecimals(quoteAsset)) / latestPrice(inputAsset)}. It ensures input and quote assets are compatible in terms of precision (decimals).
+If the quote asset is just the reference asset, the latest updated price of the base asset from the data history is returned. If not, $getInvertedPrice$ is called which returns the price based on the formula of $getDecimals(baseAsset)$  * $getDecimals(quoteAsset))$ / $latestPrice(baseAsset)$. It basically returns the price of reference asset relative to the base asset. It also ensures input and quote assets are compatible in terms of precision (decimals).
+
+$getOrderPrice$ takes the inputs of address of base asset, sellQuantity and buyQuantity. It returns the price of the order based on these inputs using $buyQuantity * (10 ** uint(getDecimals(ofBase))) / (sellQuantity)$. 
 
 \begin{algorithm}
 	\caption{Update algorithm}
@@ -547,17 +564,32 @@ If the input address is just quote asset, the latest updated price from the data
 
 \subsection{Accounting} \label{component:accounting}
 
+Accounting keeps track of gav (gross asset value) of the fund. It is currently not a separate module but rather a part of the fund contract. Gross asset value is calculated by:
+
+
+$gav = \sum_{k=1}^{n} assetHoldings(a_k) * assetPrice(a_k)$
+
+
+where n is the number of registered assets in the asset registrar module. $assetHoldings(a_k)$  is the quantity of assets of type k held by the fund and $assetPrice(a_k)$ is the price of the asset of type k which is obtained from the datafeed module.
+
 \subsection{Rewards}
+
+There are essentially two kinds of rewards associated with a fund: performance and management rewards. Both are meant as forms of compenesation for the fund manager. Management reward is proportional to the time of management. Performance reward, on the other hand is solely based on the performance of the fund.
+
+Performance reward  is calculated by the formula $absoluteChange * performanceRewardRate / divisorFee$. $absoluteChange$ refers to the change (only positive) in share price of the fund from the last high-water mark multiplied by the total number of shares. High-water mark ensures that the fund manager is not rewarded for poor performance or rewarded multiple times for the same performance. It is updated each time the fund manager performs rewards redemption (conversion into shares).
+
+Management reward is calculated by the formula $absoluteChange * managementRewardRate / divisorFee$. Where $absoluteChange = timeDifference * gav$.
+
 
 \subsection{Participation}
 
-Participation module specifies rules for whitelisting investors. It comprises of two boolean functions \textit{isSubscriptionPermitted} and \textit{isRedemptionPermitted} which enforce rules to check if a particular address is allowed to invest and redeem from the fund. The functions \textit{attestForIdentity} and \textit{removeAttestion} both of which take a single parameter of the participant address can be used to add or remove  the participant address from the whitelist respectively. 
+Participation module specifies rules for whitelisting investors. It comprises of two boolean functions $isSubscriptionPermitted$ and $isRedemptionPermitted$ which enforce rules to check if a particular address is allowed to invest and redeem from the fund. The functions $attestForIdentity$ and $removeAttestion$ both of which take a single parameter of the participant address can be used to add or remove  the participant address from the whitelist respectively. 
 
 \subsection{Exchange Adapter}
 
 Exchange adapter is an adapter between Melon protocol and decentralized exchanges such as OasisDex, Kyber, Bancor. The exact implementation details are dependant on the decentralized exchange to be compatible with, but there are three primary functions.
 
-\textit{makeOrder} can be used to make an order on the given exchange. It takes the following input parameters:
+$makeOrder$ can be used to make an order on the given exchange. It takes the following input parameters:
 \begin{center}
 	\footnotesize
 	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
@@ -571,7 +603,7 @@ Exchange adapter is an adapter between Melon protocol and decentralized exchange
 	\end{tabular}
 \end{center}
 
-\textit{takeOrder} can be used to take a specific order on the given exchange. It takes the following input parameters:
+$takeOrder$ can be used to take a specific order on the given exchange. It takes the following input parameters:
 \begin{center}
 	\footnotesize
 	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
@@ -583,7 +615,7 @@ Exchange adapter is an adapter between Melon protocol and decentralized exchange
 	\end{tabular}
 \end{center}
 
-\textit{cancelOrder} can be used to cancel a specific order. It takes the following input parameters:
+$cancelOrder$ can be used to cancel a specific order. It takes the following input parameters:
 \begin{center}
 	\footnotesize
 	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
@@ -596,7 +628,7 @@ Exchange adapter is an adapter between Melon protocol and decentralized exchange
 
 \subsection{Risk Management}
 
-Risk management module primarily comprises of two boolean functions \textit{isMakePermitted} and \textit{isTakePermitted} both of which take input the following parameters:
+Risk management module primarily comprises of two boolean functions $isMakePermitted$ and $isTakePermitted$ both of which take input the following parameters:
 
 \begin{center}
 	\footnotesize
@@ -612,21 +644,24 @@ Risk management module primarily comprises of two boolean functions \textit{isMa
 	\end{tabular}
 \end{center}
 
-Custom logic can be defined based on the input parameters that enforces the behaviour of those two boolean functions. (Example: return true if orderPrice >= referencePrice). 
+Custom logic can be defined based on the input parameters that enforces the behaviour of those two boolean functions. (Example: return true if $orderPrice >= referencePrice$). 
 
+Our simple flavor of risk management module called RMMakeOrders checks whether the orderPrice falls within the maximum allowed deviation relative to the reference price. It evaluates $orderPrice <= referencePrice - (riskLevel  * referencePrice) / riskDivisor$ and disallows the make or take order if it is true. riskLevel is the magnitude of deviation allowed from reference price. 
+
+The intuition behind it is that the order price should always be higher than or close to the reference price. Order price is directly proportional to the buyQuantity and inversely proportional to the sellQuantity. It is always beneficial to have the buyQuantity as high as possible.
 \subsection{Version}
 
 The Version contract maps one-to-one with a protocol version, meaning that each deployment of the protocol contains a single Version contract.
 
 The purpose of the deployed Version is to index Funds in each protocol version, and to allow managers to set up and shut down their Funds.
-Indeed, Funds can \textit{only} be created through calling \textit{setupFund} on a particular Version contract (\ref{interaction:setup-fund}).
+Indeed, Funds can \textit{only} be created through calling $setupFund$ on a particular Version contract (\ref{interaction:setup-fund}).
 Thus, with each particular Version, the interface and initial template of each new fund is identical.
-Likewise, Funds can be shut down with the manager calling \textit{shutDownFund} through the Version with which the Fund was deployed.
+Likewise, Funds can be shut down with the manager calling $shutDownFund$ through the Version with which the Fund was deployed.
 
 This method of deploying Funds lends itself well to Governance; old Versions can be deprecated to eliminate bugs, or new Versions introduced to add features.
 Adding a Version starts with a proposal for a new Version, and is executed when authority consensus is established.
 This process is performed by the Governance contract, and is described in \ref{component:governance}.
-Similarly, a Version contract is deprecated when the Governance contract calls \textit{shutDown} on the Version, again requiring authority consensus.
+Similarly, a Version contract is deprecated when the Governance contract calls $shutDown$ on the Version, again requiring authority consensus.
 This prevents new Funds from being created by this Version, and allows anyone to shut down Funds created through it.
 
 The parameters required for creating a new Version are as follows:
@@ -659,13 +694,13 @@ Governance uses \textit{ds-group} module to require and establish consensus of a
 \end{center}
 
 
-\textit{proposeVersion} can be used by an authority to propose a new version address.
+$proposeVersion$ can be used by an authority to propose a new version address.
 
-\textit{approveVersion} can be used by an authority other than the proposer to specify their endorsement for the new version proposal.  Number of confirmations is incremented.
+$approveVersion$ can be used by an authority other than the proposer to specify their endorsement for the new version proposal.  Number of confirmations is incremented.
 
-\textit{triggerVersion} checks if the number of confirmations for that particular version proposal satisfies the quorum condition and adds the proposed version to the version list. 
+$triggerVersion$ checks if the number of confirmations for that particular version proposal satisfies the quorum condition and adds the proposed version to the version list. 
 
-Shutting down a version follows a similar flow with the methods \textit{proposeShutdown}, \textit{approveShutdown} and \textit{triggerShutdown} instead.
+Shutting down a version follows a similar flow with the methods $proposeShutdown$, $approveShutdown$ and $triggerShutdown$ instead.
 
 \section{Interactions}
 
@@ -678,14 +713,14 @@ The three main agents being: Investor, Manager, Module Operator.
 An asset registrar tracks the universe of assets available for management, and information about each asset.
 The operator is responsible for keeping the registry in check, which may include adding and removing assets.
 
-If an operator desires to register an asset, he must call the \textit{register} function with information about the asset including, but not limited to, its contract address, name, and ticker symbol.
-An operator may de-register an asset simply by calling \textit{remove} with the asset's contract address.
+If an operator desires to register an asset, he must call the $register$ function with information about the asset including, but not limited to, its contract address, name, and ticker symbol.
+An operator may de-register an asset simply by calling $remove$ with the asset's contract address.
 
 \subsection{Operator runs Data feed}
 
 A Data feed module requires regular updates from an operator, which act according to the algorithm described in \ref{component:data-feed}.
 The data injected into the feed is used within the fund for accounting purposes, such as calculating the price of shares.
-The \textit{update} function receives the following inputs:
+The $update$ function receives the following inputs:
 
 \begin{center}
 		\footnotesize
@@ -697,11 +732,11 @@ The \textit{update} function receives the following inputs:
 		\end{tabular}
 \end{center}
 
-It is the operator's responsibility to call \textit{update} at the interval defined at data feed setup.
+It is the operator's responsibility to call $update$ at the interval defined at data feed setup.
 
 \subsection{Operator runs Participation module}
 
-An operator can use \textit{attestForIdentity} and \textit{removeAttestation} to achieve the vanilla functionality of whitelisting and removing from whitelist an investor. They may also define additional functionality, e.g. requiring the subscribing participant to be in a special whitelist status in case the subscription request is for more than 'n' number of shares.
+An operator can use $attestForIdentity$ and $removeAttestation$ to achieve the vanilla functionality of whitelisting and removing from whitelist an investor. They may also define additional functionality, e.g. requiring the subscribing participant to be in a special whitelist status in case the subscription request is for more than 'n' number of shares.
 
 \subsection{Operator runs Risk management module}
 
@@ -728,7 +763,7 @@ A new Melon fund can be setup by specifying the following parameters via setupFu
 
 \subsection{Participant invests in a Melon fund} \label{interaction:invest}
 
-A participant starts to invest in a fund \textit{F} by first creating a subscription request \textit{R}.
+A participant starts to invest in a fund $F$ by first creating a subscription request $R$.
 
 Parameters to be specified are:
 
@@ -743,9 +778,9 @@ Parameters to be specified are:
 	\end{tabular}
 \end{center}
 
-Properties of \textit{R} are checked against restriction rules specified in the participation module \textit{P} by the boolean function \textit{isSubscriptionPermitted} (e.g checking whether a participant has an attested Uport identity).
+Properties of $R$ are checked against restriction rules specified in the participation module $P$ by the boolean function $isSubscriptionPermitted$ (e.g checking whether a participant has an attested Uport identity).
 
-\textit{R} is then executed by some entity calling \textit{executeRequest} after certain conditions are satisfied, described immediately below in \ref{delayed-requests}.
+$R$ is then executed by some entity calling $executeRequest$ after certain conditions are satisfied, described immediately below in \ref{delayed-requests}.
 
 \subsubsection{Delayed requests} \label{delayed-requests}
 
@@ -785,9 +820,9 @@ Parameters to be specified are:
 	\end{tabular}
 \end{center}
 
-Properties of \textit{R} are checked against restriction rules specified in the participation module \textit{P} via the boolean function \textit{isRedemptionPermitted}.
+Properties of $R$ are checked against restriction rules specified in the participation module $P$ via the boolean function $isRedemptionPermitted$.
 
-\textit{R} is then executed in the way described in \ref{interaction:invest}, with a delay as described in \ref{delayed-requests}.
+$R$ is then executed in the way described in \ref{interaction:invest}, with a delay as described in \ref{delayed-requests}.
 
 Redemptions from a Melon fund can be requested as either (i) a redemption for the shares directly in reference asset, or (ii) redeeming a \textit{slice} of the fund's allocation, proportional to the amount of shares being redeemed.
 The formula for slice allocation is defined in \ref{component:accounting}.
@@ -795,7 +830,7 @@ The formula for slice allocation is defined in \ref{component:accounting}.
 \subsection{Manager toggles subscription}
 
 A manager can turn off and on the ability subscribe to (i.e. invest in) their fund.
-The function to do so takes no parameters, and is called \textit{toggleSubscription}.
+The function to do so takes no parameters, and is called $toggleSubscription$.
 
 When disabled, subscriptions can no longer be requested by prospective investors.
 
@@ -807,17 +842,17 @@ The option to redeem in slices, as described in \ref{interaction:redeem}, is alw
 
 \subsection{Manager makes an order}
 
-Manager can make an order by specifying asset pair, sell and buy quantities as parameters. Asset pair is checked against datafeed module DF through the function \textit{DF.existsData}. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function \textit{R.isMakePermitted}.
+Manager can make an order by specifying asset pair, sell and buy quantities as parameters. Asset pair is checked against datafeed module DF through the function $DF.existsData$. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function $R.isMakePermitted$.
 
 The specified quantity of the asset is given allowance to the selected exchanging via ERC20's approve function.
 
-Order is then placed on the selected exchange through the exchangeAdapter contract E via \textit{E.makeOrder} by specifying the exchange and order parameters as parameters.
+Order is then placed on the selected exchange through the exchangeAdapter contract E via $E.makeOrder$ by specifying the exchange and order parameters as parameters.
 
 The order is filled on the selected exchange (in the future, this could be any compatible decentralized exchange like OasisDex, Kyber, etc.) when the price is met.
 
 \subsection{Manager takes an order}
 
-Manager can take an order by specifying an order id and quantity as parameters. Asset pair is checked against datafeed module DF through the function \textit{DF.existsData}. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function \textit{R.isTakePermitted}.
+Manager can take an order by specifying an order id and quantity as parameters. Asset pair is checked against datafeed module DF through the function $DF.existsData$. Order parameters are then checked against restriction rules specified in the risk management module R via the boolean function $R.isTakePermitted$.
 
 The specified quantity of the asset is given allowance to the selected exchanging via ERC20's approve function.
 
@@ -825,13 +860,13 @@ Order id must correspond to a valid, existing order on the selected exchange. Or
 
 \subsection{Manager converts rewards into shares}
 
-Manager rewards in the form of ownerless shares of the fund F can be allocated to the manager via \textit{F.convertUnclaimedRewards} function. Ownerless shares refer to the quantity of shares, representing unclaimed rewards by the Manager such as rewards for managing the fund and for performance. First internal stats of F are calculated using \textit{F.performCalculations} function. The quantity of unclaimedRewards is calculated internally using \textit{calcUnclaimedRewards} function.
+Manager rewards in the form of ownerless shares of the fund F can be allocated to the manager via $F.convertUnclaimedRewards$ function. Ownerless shares refer to the quantity of shares, representing unclaimed rewards by the Manager such as rewards for managing the fund and for performance. First internal stats of F are calculated using $F.performCalculations$ function. The quantity of unclaimedRewards is calculated internally using $calcUnclaimedRewards$ function.
 
-A share quantity of \textit{unclaimedRewards * gav} (from Calculations) is assigned to the manager.
+A share quantity of $unclaimedRewards * gav$ (from Calculations) is assigned to the manager.
 
 \subsection{Manager shuts down the fund}
 
-A Manager can shut down a fund \textit{F} he owns via \textit{F.shutdown} function.
+A Manager can shut down a fund $F$ he owns via $F.shutdown$ function.
 
 Investing, redemption (only in reference asset, investors can still redeem in the form of percentage of held assets), managing, making / taking orders, convertUnclaimedRewards are rendered disabled.
 % An example of a floating figure using the graphicx package.

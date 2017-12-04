@@ -126,7 +126,7 @@
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
+  \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
   % \graphicspath{{../pdf/}{../jpeg/}}
   % and their extensions so you won't have to specify these with
@@ -431,7 +431,7 @@ Fund administration consists of four parts. Fund Custodian, Fund Accountant, KYC
 
 \subsubsection{Assets}
 
-An example for such computer code is known as the ERC20 standard. Essentially a small (<100 lines of code) piece of software implementing a bitcoin-like cryptocurrency.
+An example for such computer code is known as the ERC20 standard. Essentially a small ($<100$ lines of code) piece of software implementing a bitcoin-like cryptocurrency.
 
 \subsubsection{Exchanges}
 
@@ -450,6 +450,12 @@ To manage their holdings these investment funds use decentralised exchanges to b
 
 \subsection{Governance}
 
+\begin{figure*}[ht!]
+	\centering
+	\includegraphics[width=135mm]{images/governance.png}
+	\caption{Protocol governance linked to versions linked to Melon funds\label{fig:governance}}
+\end{figure*}
+
 The main functionality of the Governance contract is to add new protocol versions such as this Version contract and to shut down existing versions once they become obsolete.
 
 Adding a \textit{new protocol version} is done by anyone proposing a version to be added and is executed once authority consensus has been established.
@@ -466,6 +472,12 @@ receiving management and performance rewards.
 A Melon fund is created by triggering a Solidity function in the version contract.
 
 \subsection{Modules}
+
+\begin{figure*}[ht!]
+	\centering
+	\includegraphics[width=135mm]{images/fund.png}
+	\caption{Melon fund interaction with Melon modules\label{fig:fund}}
+\end{figure*}
 
 Functionality outside the core Fund logic is provided by \textit{Melon modules}. These modules interact with the Fund in a standardized way, depending on their type.
 This enables modules to be interchangeable within their class, such that two modules of the same class may fill the same \textit{role}, albeit with differing logic, parameters or other characteristics.

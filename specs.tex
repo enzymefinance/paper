@@ -572,14 +572,36 @@ $gav = \sum_{k=1}^{n} assetHoldings(a_k) * assetPrice(a_k)$
 
 where n is the number of registered assets in the asset registrar module. $assetHoldings(a_k)$  is the quantity of assets of type k held by the fund and $assetPrice(a_k)$ is the price of the asset of type k which is obtained from the datafeed module.
 
+
 \subsection{Rewards}
 
-There are essentially two kinds of rewards associated with a fund: performance and management rewards. Both are meant as forms of compenesation for the fund manager. Management reward is proportional to the time of management. Performance reward, on the other hand is solely based on the performance of the fund.
+There are two kinds of rewards associated with a fund: \textit{performance} and \textit{management} rewards.
+Both are meant as forms of compenesation for the fund manager. Management reward is proportional to the duration of management for a fund.
+Performance reward, on the other hand is solely based on the performance of the fund.
 
-Performance reward  is calculated by the formula $absoluteChange * performanceRewardRate / divisorFee$. $absoluteChange$ refers to the change (only positive) in share price of the fund from the last high-water mark multiplied by the total number of shares. High-water mark ensures that the fund manager is not rewarded for poor performance or rewarded multiple times for the same performance. It is updated each time the fund manager performs rewards redemption (conversion into shares).
+\subsubsection{Calculation}
 
-Management reward is calculated by the formula $absoluteChange * managementRewardRate / divisorFee$. Where $absoluteChange = timeDifference * gav$.
+Performance rewards are calculated by the formula $investmentProfits * performanceRewardRate$.
+Here, $performanceRewardRate$ is expressed as a percentage, and $investmentProfits$ refers to the positive change in share price of the fund from the last high-water mark (excluding any unclaimed performance rewards) multiplied by the total number of shares.
 
+\textit{High-water mark} refers to the maximum share price within a given interval.
+Using this, we ensure that the fund manager is neither rewarded for poor performance, nor rewarded multiple times for the same performance.
+The high-water mark is updated each time the manager performs rewards redemption (conversion into shares).
+
+Management rewards are calculated by the formula $((timeDifference * gav) / 1 year) * managementRewardRate$.
+Here, $managementRewardRate$ is expressed as a percentage. This is the percentage of the fund's gross asset value extracted through management fees on a yearly basis.
+
+\subsubsection{Redemption}
+
+As might be expected, performance rewards are only paid out in the case of the fund's share price increasing.
+Therefore, a decrease in performance will not \textit{cost} the manager any money, in the form of a negative performance reward.
+
+In contrast to performance rewards, management rewards are paid out based on duration of management, irrespective of fund performance.
+
+Redemption of both reward types occurs simultaneously, and can be triggered at the manager's discretion.
+The rewards are given to the manager in the form of an allocation of the fund's shares.
+That is, at redemption time, the manager receives newly-minted shares of their own fund.
+Thus, the shareholders pay their fees in the form of share inflation, rather than directly subtracting from their balance of any particular token.
 
 \subsection{Participation}
 

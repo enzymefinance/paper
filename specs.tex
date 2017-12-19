@@ -464,7 +464,7 @@ Shutting down an existing protocol version is done by anyone proposing a version
 
 Shutting down a version disables the ability to setup new funds using this version and enables anyone to shut down any existing funds of this version.
 
-\subsection{Investment Fund} \label{fund}
+\subsection{Investment Fund}\label{fund}
 
 Melon fund as a smart contract that acts as the custodian and accountant. Broadly speaking a Melon fund should be capable of accepting/executing subscription and redemption requests, make orders on an exchange, take orders on an exchange and
 receiving management and performance rewards.
@@ -609,9 +609,18 @@ Participation module specifies rules for whitelisting investors. It comprises of
 
 \subsection{Exchange Adapter}
 
-Exchange adapter is an adapter between Melon protocol and decentralized exchanges such as OasisDex, Kyber, Bancor. The exact implementation details are dependant on the decentralized exchange to be compatible with, but there are three primary functions.
+The \textit{exchange adapter} is an adapter between the Melon protocol and decentralized exchanges such as OasisDex, Kyber, or Bancor.
 
-$makeOrder$ can be used to make an order on the given exchange. It takes the following input parameters:
+The exchange adapter contract is designed to be used as a proxy for the exchange itself, adapting the exchange's methods to be in line with the interface that the fund expects.
+The adapter is also pre-deployed, and is chosen when a manager initially sets up a fund.
+
+This contract differs from some of the others in that its methods are called \textit{in the context of the fund}, using $delegateCall$.
+By doing this, the fund directly interacts with the exchange, albeit via adapted methods present on the adapter.
+This ultimately allows the fund contract's internal order management code to remain identical \textit{across all funds}, while retaining the ability for fund managers to interact with their preferred exchanges.
+
+The exact implementation details of the adapter methods depend on the exchange we are interfacing with, but there are three primary functions.
+
+The first, $makeOrder$ can be used to make an order on the given exchange. It takes the following input parameters:
 \begin{center}
 	\footnotesize
 	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
@@ -625,7 +634,7 @@ $makeOrder$ can be used to make an order on the given exchange. It takes the fol
 	\end{tabular}
 \end{center}
 
-$takeOrder$ can be used to take a specific order on the given exchange. It takes the following input parameters:
+Second, $takeOrder$ can be used to take a specific order on the given exchange. It takes the following input parameters:
 \begin{center}
 	\footnotesize
 	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
@@ -637,7 +646,7 @@ $takeOrder$ can be used to take a specific order on the given exchange. It takes
 	\end{tabular}
 \end{center}
 
-$cancelOrder$ can be used to cancel a specific order. It takes the following input parameters:
+Finally, $cancelOrder$ can be used to cancel a specific order. It takes the following input parameters:
 \begin{center}
 	\footnotesize
 	\begin{tabular}{ | p{2.7cm} | p{0.8cm} | p{4cm} | }
@@ -668,9 +677,13 @@ Risk management module primarily comprises of two boolean functions $isMakePermi
 
 Custom logic can be defined based on the input parameters that enforces the behaviour of those two boolean functions. (Example: return true if $orderPrice >= referencePrice$). 
 
-Our simple flavor of risk management module called RMMakeOrders checks whether the orderPrice falls within the maximum allowed deviation relative to the reference price. It evaluates $orderPrice <= referencePrice - (riskLevel  * referencePrice) / riskDivisor$ and disallows the make or take order if it is true. riskLevel is the magnitude of deviation allowed from reference price. 
+Our simple flavor of risk management module is called RMMakeOrders. It checks whether the orderPrice falls within the maximum allowed deviation relative to the reference price.
+RMMakeOrders evaluates $orderPrice <= referencePrice - (riskLevel  * referencePrice) / riskDivisor$ and disallows the make or take order if it is true.
+$riskLevel$ is the magnitude of deviation allowed from reference price. 
 
-The intuition behind it is that the order price should always be higher than or close to the reference price. Order price is directly proportional to the buyQuantity and inversely proportional to the sellQuantity. It is always beneficial to have the buyQuantity as high as possible.
+The intuition behind it is that the order price should always be higher than or close to the reference price.
+Order price is directly proportional to the buyQuantity and inversely proportional to the sellQuantity. It is always beneficial to have the buyQuantity as high as possible.
+
 \subsection{Version}
 
 The Version contract maps one-to-one with a protocol version, meaning that each deployment of the protocol contains a single Version contract.
